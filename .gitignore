@@ -32,6 +32,7 @@ crashlytics-build.properties
 .idea/
 *.csproj
 *.sln
+*.slnx
 *.suo
 *.tmp
 *.user
