@@ -1,0 +1,16 @@
+Monster01.png
+size:226,114
+filter:Linear,Linear
+pma:true
+Body
+bounds:2,2,110,118
+offsets:5,8,125,134
+rotate:90
+Mouth
+bounds:201,43,69,23
+offsets:13,12,95,49
+rotate:90
+Shade
+bounds:122,2,110,77
+offsets:10,7,127,93
+rotate:90

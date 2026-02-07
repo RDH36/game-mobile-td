@@ -1,0 +1,14 @@
+Gun04.png
+size:229,153
+filter:Linear,Linear
+pma:true
+body
+bounds:123,48,104,103
+offsets:4,3,112,112
+gun
+bounds:123,2,44,101
+offsets:11,7,64,115
+rotate:90
+shade
+bounds:2,16,119,135
+offsets:5,6,130,147

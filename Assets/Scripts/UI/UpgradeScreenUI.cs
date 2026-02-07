@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using MoreMountains.Feedbacks;
 
 public class UpgradeScreenUI : MonoBehaviour
 {
@@ -99,6 +100,7 @@ public class UpgradeScreenUI : MonoBehaviour
     {
         if (_panel == null) return;
         _panel.SetActive(true);
+        SpringInChildren(_panel.transform);
 
         int waveNum = _waveManager != null ? _waveManager.CurrentWave : 0;
         if (_titleText != null) _titleText.text = $"VAGUE {waveNum} TERMINEE !";
@@ -146,6 +148,19 @@ public class UpgradeScreenUI : MonoBehaviour
     void Hide()
     {
         if (_panel != null) _panel.SetActive(false);
+    }
+
+    void SpringInChildren(Transform parent)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform child = parent.GetChild(i);
+            var spring = child.GetComponent<MMSpringScale>();
+            if (spring == null)
+                spring = child.gameObject.AddComponent<MMSpringScale>();
+            spring.MoveToInstant(Vector3.zero);
+            spring.MoveTo(Vector3.one);
+        }
     }
 
     void OnUpgradeClicked(int index)

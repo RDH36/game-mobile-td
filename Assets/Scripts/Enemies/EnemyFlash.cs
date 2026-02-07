@@ -22,7 +22,8 @@ public class EnemyFlash : MonoBehaviour
     IEnumerator FlashRoutine()
     {
         _originalColor = _sr.color;
-        _sr.color = Color.white;
+        // Overbright tint washes out the sprite texture to near-white
+        _sr.color = new Color(10f, 10f, 10f, 1f);
         yield return new WaitForSeconds(0.1f);
         _sr.color = _originalColor;
         _flashRoutine = null;

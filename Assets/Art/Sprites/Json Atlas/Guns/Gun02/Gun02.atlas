@@ -1,0 +1,14 @@
+Gun02.png
+size:230,150
+filter:Linear,Linear
+pma:true
+body
+bounds:124,48,104,100
+offsets:4,5,113,110
+gun
+bounds:124,2,44,101
+offsets:6,5,57,112
+rotate:90
+shade
+bounds:2,13,120,135
+offsets:5,6,131,147

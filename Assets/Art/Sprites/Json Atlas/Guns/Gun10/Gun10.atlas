@@ -1,0 +1,14 @@
+Gun10.png
+size:270,140
+filter:Linear,Linear
+pma:true
+body
+bounds:2,2,136,103
+offsets:10,14,156,130
+rotate:90
+gun
+bounds:229,38,39,100
+offsets:9,6,56,112
+shade
+bounds:107,3,120,135
+offsets:5,5,131,146

@@ -1,0 +1,83 @@
+{
+"skeleton": {
+	"hash": "7jMMWh76bCk",
+	"spine": "4.1.17",
+	"x": -63.61,
+	"y": 91.5,
+	"width": 131,
+	"height": 178.54,
+	"images": "./Images/",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "gun", "parent": "root", "length": 27.76, "rotation": 90.92, "x": 0.84, "y": 186.33 }
+],
+"slots": [
+	{ "name": "shade", "bone": "root", "attachment": "shade" },
+	{ "name": "gun", "bone": "gun", "attachment": "gun" },
+	{ "name": "body", "bone": "root", "attachment": "body" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"body": {
+				"body": { "x": 1.34, "y": 154.1, "width": 113, "height": 110 }
+			},
+			"gun": {
+				"gun": { "x": 27.72, "y": 0.25, "rotation": -90.92, "width": 57, "height": 112 }
+			},
+			"shade": {
+				"shade": { "x": 1.89, "y": 165, "width": 131, "height": 147 }
+			}
+		}
+	}
+],
+"animations": {
+	"Idle": {
+		"bones": {
+			"gun": {
+				"rotate": [
+					{}
+				],
+				"translate": [
+					{}
+				],
+				"scale": [
+					{}
+				],
+				"shear": [
+					{}
+				]
+			}
+		}
+	},
+	"Shoot": {
+		"bones": {
+			"gun": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.1667, "curve": "stepped" },
+					{ "time": 0.3333 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.1667, "y": -3.94 },
+					{ "time": 0.3333 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.1667, "curve": "stepped" },
+					{ "time": 0.3333 }
+				],
+				"shear": [
+					{ "curve": "stepped" },
+					{ "time": 0.1667, "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			}
+		}
+	}
+}
+}

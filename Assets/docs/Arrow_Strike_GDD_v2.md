@@ -1,5 +1,5 @@
 # GAME DESIGN DOCUMENT
-## 🏹 Arrow Strike
+## 🔫 Monster Cannon
 
 **Version :** 2.0  
 **Dernière mise à jour :** Février 2026
@@ -38,21 +38,21 @@
 
 # 1. Concept du Jeu
 
-Arrow Strike est un jeu arcade roguelike où le joueur utilise un arc pour lancer des flèches qui **rebondissent** sur les murs, obstacles et ennemis. L'objectif est de toucher un maximum d'ennemis avec chaque flèche tout en survivant à leurs contre-attaques.
+Monster Cannon est un jeu arcade roguelike où le joueur utilise un cannon pour tirer des balles qui **rebondissent** sur les murs, obstacles et monstres. L'objectif est de toucher un maximum de monstres avec chaque tir tout en survivant à leurs contre-attaques.
 
 ## Pitch en une phrase
 
-> *"Vise, tire, fais rebondir ta flèche et élimine tous les ennemis avant qu'ils ne détruisent ton arc !"*
+> *"Vise, tire, fais rebondir ta balle et élimine tous les monstres avant qu'ils ne détruisent ton cannon !"*
 
 ## Ce qui rend le jeu unique
 
 | Feature | Description |
 |---------|-------------|
-| **Rebonds partout** | Murs, obstacles ET ennemis font rebondir la flèche |
-| **Durabilité flèche** | Chaque contact ennemi use la flèche |
-| **Combat bidirectionnel** | Les ennemis survivants contre-attaquent |
+| **Rebonds partout** | Murs, obstacles ET monstres font rebondir le tir |
+| **Durabilité tir** | Chaque contact monstre use le tir |
+| **Combat bidirectionnel** | Les monstres survivants contre-attaquent |
 | **Progression roguelike** | Upgrades entre chaque vague |
-| **Méta-progression** | Boutique, arcs, résistance |
+| **Méta-progression** | Boutique, cannons, résistance |
 
 ---
 
@@ -74,10 +74,10 @@ Arrow Strike est un jeu arcade roguelike où le joueur utilise un arc pour lance
 │  │  │           BOUCLE D'UNE VAGUE              │  │    │
 │  │  │                                           │  │    │
 │  │  │  1. VISER (Swipe + Trajectoire)           │  │    │
-│  │  │  2. TIRER (Flèche avec rebonds)           │  │    │
-│  │  │  3. DÉGÂTS (Flèche → Ennemis)             │  │    │
-│  │  │  4. CONTRE-ATTAQUE (Ennemis → Arc)        │  │    │
-│  │  │  5. RÉPÉTER jusqu'à 0 flèches/ennemis     │  │    │
+│  │  │  2. TIRER (Tir avec rebonds)              │  │    │
+│  │  │  3. DÉGÂTS (Tir → Monstres)               │  │    │
+│  │  │  4. CONTRE-ATTAQUE (Monstres → Cannon)    │  │    │
+│  │  │  5. RÉPÉTER jusqu'à 0 tirs/monstres       │  │    │
 │  │  │                                           │  │    │
 │  │  └───────────────────────────────────────────┘  │    │
 │  │                      ↓                          │    │
@@ -96,28 +96,28 @@ Arrow Strike est un jeu arcade roguelike où le joueur utilise un arc pour lance
 ## 2.2 Déroulement d'un tir
 
 ```
-SWIPE → TRAJECTOIRE VISIBLE → RELÂCHER → FLÈCHE PART
+SWIPE → TRAJECTOIRE VISIBLE → RELÂCHER → TIR PART
                                               ↓
                     ┌─────────────────────────────────────┐
                     │         BOUCLE DE REBONDS          │
                     │                                     │
-                    │   FLÈCHE TOUCHE QUELQUE CHOSE ?     │
+                    │   TIR TOUCHE QUELQUE CHOSE ?        │
                     │           ↓                         │
                     │   ┌─────────────────────────────┐   │
                     │   │ MUR/OBSTACLE → Rebond       │   │
-                    │   │ ENNEMI → Rebond + Dégâts    │   │
-                    │   │          Flèche -1 PV       │   │
-                    │   │          Ennemi -X PV       │   │
+                    │   │ MONSTRE → Rebond + Dégâts   │   │
+                    │   │          Tir -1 PV          │   │
+                    │   │          Monstre -X PV      │   │
                     │   └─────────────────────────────┘   │
                     │           ↓                         │
-                    │   FLÈCHE PV > 0 ?                   │
+                    │   TIR PV > 0 ?                      │
                     │   OUI → Continue rebonds            │
-                    │   NON → Flèche disparaît            │
+                    │   NON → Tir disparaît               │
                     │                                     │
                     └─────────────────────────────────────┘
                                     ↓
-                        CONTRE-ATTAQUE DES ENNEMIS
-                        (Ennemis survivants → Arc)
+                        CONTRE-ATTAQUE DES MONSTRES
+                        (Monstres survivants → Cannon)
 ```
 
 ---
@@ -128,20 +128,20 @@ SWIPE → TRAJECTOIRE VISIBLE → RELÂCHER → FLÈCHE PART
 
 | Action | Input | Feedback |
 |--------|-------|----------|
-| Viser | Swipe depuis l'arc | Ligne trajectoire apparaît |
+| Viser | Swipe depuis le cannon | Ligne trajectoire apparaît |
 | Ajuster puissance | Longueur du swipe | Ligne plus longue |
 | Ajuster angle | Direction du swipe | Ligne suit le doigt |
-| Tirer | Relâcher | Flèche part + vibration |
+| Tirer | Relâcher | Tir part + vibration |
 
 ## 3.2 Système de rebonds
 
-**TOUT fait rebondir la flèche :**
+**TOUT fait rebondir le tir :**
 
-| Surface | Effet sur flèche | Effet sur surface |
+| Surface | Effet sur tir | Effet sur surface |
 |---------|------------------|-------------------|
 | Murs (4 bords écran) | Rebond gratuit | Aucun |
 | Obstacles | Rebond gratuit | Aucun (ou destructible) |
-| Ennemis | Rebond + Flèche -1 PV | Ennemi -X dégâts |
+| Monstres | Rebond + Tir -1 PV | Monstre -X dégâts |
 
 ## 3.3 Trajectoire prédictive
 
@@ -151,7 +151,7 @@ SWIPE → TRAJECTOIRE VISIBLE → RELÂCHER → FLÈCHE PART
 
 ## 3.4 Fin de trajectoire
 
-La flèche s'arrête quand :
+Le tir s'arrête quand :
 - ❌ Durabilité = 0 PV
 - ❌ Sort de l'écran (impossible si murs)
 - ❌ Timer max atteint (anti-boucle infinie)
@@ -160,47 +160,47 @@ La flèche s'arrête quand :
 
 # 4. Entités du Jeu
 
-## 4.1 L'Arc (Joueur)
+## 4.1 Le Cannon (Joueur)
 
 | Stat | Description | MVP | Futur |
 |------|-------------|-----|-------|
-| **PV** | Points de vie | 20 | Variable selon l'arc |
+| **PV** | Points de vie | 20 | Variable selon le cannon |
 | **Position** | Emplacement | Fixe en bas | Fixe en bas |
-| **Résistance** | Usure de l'arc | ❌ Non | ✅ Oui |
+| **Résistance** | Usure du cannon | ❌ Non | ✅ Oui |
 | **Restauration PV** | Quand | Fin de vague | Fin de vague |
 
-### Arcs disponibles (Futur)
+### Cannons disponibles (Futur)
 
-| Arc | PV | Résistance | Bonus | Prix 💎 |
+| Cannon | PV | Résistance | Bonus | Prix 💎 |
 |-----|-----|------------|-------|---------|
 | **Basique** | 20 | 10 | - | Gratuit |
 | **Renforcé** | 25 | 15 | - | 500 |
 | **Élite** | 30 | 20 | +5% dégâts | 1000 |
-| **Légendaire** | 35 | 25 | +1 flèche/vague | 2500 |
-| **Mythique** | 40 | 30 | +10% dégâts, +1 flèche | 5000 |
+| **Légendaire** | 35 | 25 | +1 tir/vague | 2500 |
+| **Mythique** | 40 | 30 | +10% dégâts, +1 tir | 5000 |
 
-## 4.2 La Flèche
+## 4.2 Le Bullet/Tir
 
 | Stat | Description | MVP | Futur |
 |------|-------------|-----|-------|
 | **Durabilité (PV)** | Nombre de touches | 4 | Upgradeable (5-10) |
 | **Dégâts** | Dégâts par touche | 1 | Upgradeable (1-5) |
-| **Quantité/vague** | Flèches disponibles | 3 | Upgradeable (3-7) |
+| **Quantité/vague** | Tirs disponibles | 3 | Upgradeable (3-7) |
 | **Effets spéciaux** | Bonus | ❌ Non | ✅ Oui |
 
-### Types de flèches (Futur)
+### Types de tirs (Futur)
 
 | Type | Effet spécial | Déblocage |
 |------|---------------|-----------|
-| **Normale** | Aucun | Base |
-| **Perforante** | Traverse ennemis 1 PV | Upgrade |
-| **Explosive** | AoE au dernier rebond | Upgrade rare |
-| **Glaciale** | Ralentit ennemis | Upgrade |
-| **Électrique** | Chaîne entre ennemis proches | Upgrade légendaire |
+| **Normal** | Aucun | Base |
+| **Perforant** | Traverse monstres 1 PV | Upgrade |
+| **Explosif** | AoE au dernier rebond | Upgrade rare |
+| **Glacial** | Ralentit monstres | Upgrade |
+| **Électrique** | Chaîne entre monstres proches | Upgrade légendaire |
 
-## 4.3 Les Ennemis
+## 4.3 Les Monstres
 
-| Type | PV | Dégâts à l'arc | Drop 💎 | MVP | Visuel |
+| Type | PV | Dégâts au cannon | Drop 💎 | MVP | Visuel |
 |------|-----|----------------|---------|-----|--------|
 | **Faible** | 1 | 1 | 1-2 | ✅ | Petit, vert |
 | **Moyen** | 2 | 2 | 3-5 | ✅ | Moyen, bleu |
@@ -208,7 +208,7 @@ La flèche s'arrête quand :
 | **Tank** | 5 | 4 | 10-15 | ❌ | Très grand, violet |
 | **Boss** | 15+ | 6 | 50+ | ❌ | Énorme, or |
 
-### Comportements ennemis (Futur)
+### Comportements monstres (Futur)
 
 | Type | Comportement |
 |------|--------------|
@@ -216,7 +216,7 @@ La flèche s'arrête quand :
 | **Mobile** | Se déplace lentement |
 | **Tireur** | Tire des projectiles |
 | **Bouclier** | Invulnérable d'un côté |
-| **Diviseur** | Se divise en 2 petits ennemis |
+| **Diviseur** | Se divise en 2 petits monstres |
 
 ## 4.4 Les Obstacles
 
@@ -234,7 +234,7 @@ La flèche s'arrête quand :
 
 ## 5.1 Structure MVP (4 vagues)
 
-| Vague | Ennemis | Types | PV ennemis | Dégâts | Difficulté |
+| Vague | Monstres | Types | PV monstres | Dégâts | Difficulté |
 |-------|---------|-------|------------|--------|------------|
 | 1 | 4-5 | Faible | 1 | 1 | ⭐ |
 | 2 | 6-7 | Faible + Moyen | 1-2 | 1-2 | ⭐⭐ |
@@ -243,7 +243,7 @@ La flèche s'arrête quand :
 
 ## 5.2 Scaling procédural (Futur)
 
-| Vague | Formule ennemis | Formule PV |
+| Vague | Formule monstres | Formule PV |
 |-------|-----------------|------------|
 | N | 4 + (N × 1.5) | 1 + (N / 3) |
 
@@ -252,8 +252,8 @@ La flèche s'arrête quand :
 ## 5.3 Entre chaque vague
 
 1. ✅ **Calcul des gemmes** récoltées
-2. ✅ **PV Arc restauré** à 100%
-3. ⏳ **Résistance Arc -1** (futur)
+2. ✅ **PV Cannon restauré** à 100%
+3. ⏳ **Résistance Cannon -1** (futur)
 4. ✅ **Écran d'upgrade** apparaît
 5. ✅ Joueur choisit **1 upgrade parmi 3**
 6. ➡️ **Vague suivante** commence
@@ -274,29 +274,29 @@ La flèche s'arrête quand :
 
 | Upgrade | Effet | Coût 💎 | Icône |
 |---------|-------|---------|-------|
-| **+1 Durabilité** | Flèche 4 → 5 PV | 10 | 🛡️ |
-| **+1 Flèche** | 3 → 4 flèches/vague | 15 | 🏹 |
+| **+1 Durabilité** | Tir 4 → 5 PV | 10 | 🛡️ |
+| **+1 Tir** | 3 → 4 tirs/vague | 15 | 🔫 |
 | **+1 Dégât** | 1 → 2 dégâts/touche | 20 | ⚔️ |
 
 ## 6.3 Upgrades Futur
 
-### Catégorie Flèche 🏹
+### Catégorie Tir 🔫
 
 | Upgrade | Effet | Rareté | Coût 💎 |
 |---------|-------|--------|---------|
-| +1 Durabilité | Flèche +1 PV | ⚪ Commun | 10 |
+| +1 Durabilité | Tir +1 PV | ⚪ Commun | 10 |
 | +1 Dégât | +1 dégât/touche | ⚪ Commun | 20 |
-| Pénétration | Traverse ennemis 1 PV | 🔵 Rare | 50 |
+| Pénétration | Traverse monstres 1 PV | 🔵 Rare | 50 |
 | Rebond+ | +2 rebonds gratuits | 🔵 Rare | 40 |
-| Multi-shot | Tire 2 flèches | 🟣 Épique | 100 |
+| Multi-tir | Tire 2 tirs | 🟣 Épique | 100 |
 | Explosion | AoE au dernier rebond | 🟣 Épique | 120 |
-| Chaîne | Dégâts aux ennemis proches | 🟡 Légendaire | 200 |
+| Chaîne | Dégâts aux monstres proches | 🟡 Légendaire | 200 |
 
-### Catégorie Arc 🎯
+### Catégorie Cannon 🎯
 
 | Upgrade | Effet | Rareté | Coût 💎 |
 |---------|-------|--------|---------|
-| +2 PV Arc | Arc +2 PV max | ⚪ Commun | 15 |
+| +2 PV Cannon | Cannon +2 PV max | ⚪ Commun | 15 |
 | Armure | -1 dégât reçu | 🔵 Rare | 60 |
 | Régénération | +1 PV/vague | 🔵 Rare | 50 |
 | Bouclier | Ignore 1 attaque/vague | 🟣 Épique | 100 |
@@ -329,13 +329,13 @@ La flèche s'arrête quand :
 
 | Source | Quantité | Condition |
 |--------|----------|-----------|
-| Ennemi faible | 1-2 💎 | Kill |
-| Ennemi moyen | 3-5 💎 | Kill |
-| Ennemi fort | 5-10 💎 | Kill |
-| Ennemi tank | 10-15 💎 | Kill |
+| Monstre faible | 1-2 💎 | Kill |
+| Monstre moyen | 3-5 💎 | Kill |
+| Monstre fort | 5-10 💎 | Kill |
+| Monstre tank | 10-15 💎 | Kill |
 | Boss | 50-100 💎 | Kill |
 | Bonus vague parfaite | +20% 💎 | 0 dégât reçu |
-| Bonus combo | +5 💎/kill | 3+ kills 1 flèche |
+| Bonus combo | +5 💎/kill | 3+ kills 1 tir |
 | Pub rewarded | 50-100 💎 | Regarder pub |
 
 ### Utilisation des gemmes
@@ -343,25 +343,25 @@ La flèche s'arrête quand :
 | Usage | Coût 💎 | Quand |
 |-------|---------|-------|
 | Upgrades (run) | 10-200 | Entre vagues |
-| Acheter arc | 500-5000 | Boutique |
-| Réparer arc | 100-300 | Boutique |
+| Acheter cannon | 500-5000 | Boutique |
+| Réparer cannon | 100-300 | Boutique |
 | Cosmétiques | 100-500 | Boutique |
 
 ## 7.2 Boutique
 
-### Onglet Arcs
+### Onglet Cannons
 
-| Arc | PV | Résistance | Bonus | Prix 💎 |
+| Cannon | PV | Résistance | Bonus | Prix 💎 |
 |-----|-----|------------|-------|---------|
 | Basique | 20 | 10 | - | Gratuit |
 | Renforcé | 25 | 15 | - | 500 |
 | Élite | 30 | 20 | +5% dégâts | 1000 |
-| Légendaire | 35 | 25 | +1 flèche | 2500 |
-| Mythique | 40 | 30 | +10% dégâts, +1 flèche | 5000 |
+| Légendaire | 35 | 25 | +1 tir | 2500 |
+| Mythique | 40 | 30 | +10% dégâts, +1 tir | 5000 |
 
 ### Onglet Réparation
 
-| État arc | Coût réparation |
+| État cannon | Coût réparation |
 |----------|-----------------|
 | Résistance > 50% | 100 💎 |
 | Résistance 25-50% | 200 💎 |
@@ -372,29 +372,29 @@ La flèche s'arrête quand :
 
 | Type | Exemples | Prix 💎 |
 |------|----------|---------|
-| Skin Arc | Néon, Pixel, Dragon | 200-500 |
-| Skin Flèche | Feu, Glace, Étoile | 100-300 |
+| Skin Cannon | Néon, Pixel, Dragon | 200-500 |
+| Skin Tir | Feu, Glace, Étoile | 100-300 |
 | Trail | Arc-en-ciel, Fumée | 150-400 |
 | Effet kill | Explosion, Confettis | 200-500 |
 
 ## 7.3 Système de Résistance (Futur)
 
 ```
-DÉBUT RUN → Résistance = MAX (selon arc)
+DÉBUT RUN → Résistance = MAX (selon cannon)
 
 VAGUE 1 TERMINÉE → Résistance -1
 VAGUE 2 TERMINÉE → Résistance -1
 VAGUE 3 TERMINÉE → Résistance -1
 ...
 
-RÉSISTANCE = 0 → Arc cassé
+RÉSISTANCE = 0 → Cannon cassé
                  → Run terminé
-                 → Doit réparer ou changer d'arc
+                 → Doit réparer ou changer de cannon
 ```
 
-**Exemple avec Arc Basique (10 résistance) :**
+**Exemple avec Cannon Basique (10 résistance) :**
 - Peut faire **10 vagues max** avant de casser
-- Après : réparer (100-400 💎) ou acheter nouvel arc
+- Après : réparer (100-400 💎) ou acheter nouveau cannon
 
 ## 7.4 Matériaux (Futur avancé)
 
@@ -433,7 +433,7 @@ RÉSISTANCE = 0 → Arc cassé
 | Moment | Récompense | Fréquence max |
 |--------|------------|---------------|
 | Fin de run | Doubler gemmes récoltées | 1x/run |
-| Game Over | Revive (PV arc = 50%) | 1x/run |
+| Game Over | Revive (PV cannon = 50%) | 1x/run |
 | Entre vagues | Upgrade gratuit aléatoire | 1x/run |
 | Boutique | 50 gemmes gratuites | 3x/jour |
 | Écran accueil | Bonus journalier x2 | 1x/jour |
@@ -462,8 +462,8 @@ RÉSISTANCE = 0 → Arc cassé
 
 | Pack | Prix | Contenu | Limite |
 |------|------|---------|--------|
-| **Starter Pack** | 0.99€ | 500 💎 + Arc Renforcé | 1x/compte |
-| **Premium Pack** | 4.99€ | 2000 💎 + Arc Élite + 3 cosmétiques | 1x/compte |
+| **Starter Pack** | 0.99€ | 500 💎 + Cannon Renforcé | 1x/compte |
+| **Premium Pack** | 4.99€ | 2000 💎 + Cannon Élite + 3 cosmétiques | 1x/compte |
 | **Remove Ads** | 2.99€ | Supprime toutes les pubs bannières | Permanent |
 
 ## 8.5 Battle Pass (Futur)
@@ -472,11 +472,11 @@ RÉSISTANCE = 0 → Arc cassé
 
 | Niveau | XP requis | Récompense Free | Récompense Premium |
 |--------|-----------|-----------------|-------------------|
-| 1 | 0 | 50 💎 | + Skin flèche |
+| 1 | 0 | 50 💎 | + Skin tir |
 | 5 | 500 | 100 💎 | + 200 💎 |
-| 10 | 1500 | Upgrade rare | + Skin arc |
+| 10 | 1500 | Upgrade rare | + Skin cannon |
 | 15 | 3000 | 200 💎 | + 500 💎 |
-| 20 | 5000 | Arc Renforcé | + Arc Exclusif |
+| 20 | 5000 | Cannon Renforcé | + Cannon Exclusif |
 | 25 | 7500 | 500 💎 | + Effet kill exclusif |
 | 30 | 10000 | 1000 💎 | + Titre exclusif |
 
@@ -501,7 +501,7 @@ RÉSISTANCE = 0 → Arc cassé
 
 **Principe : Aucun avantage gameplay, juste visuel**
 
-### Skins d'arc
+### Skins de cannon
 
 | Skin | Apparence | Prix 💎 | Source |
 |------|-----------|---------|--------|
@@ -512,7 +512,7 @@ RÉSISTANCE = 0 → Arc cassé
 | Or | Doré luxueux | 500 | Boutique |
 | Galaxie | Étoiles animées | 750 | Exclusif événement |
 
-### Skins de flèche
+### Skins de tir
 
 | Skin | Apparence | Prix 💎 |
 |------|-----------|---------|
@@ -561,7 +561,7 @@ RÉSISTANCE = 0 → Arc cassé
 │                                                         │
 │  💎 125                              VAGUE 2/4          │
 │                                                         │
-│  ❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️ Arc: 20/20 PV                     │
+│  ❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️ Cannon: 20/20 PV                    │
 │                                                         │
 │  ═══════════════════════════════════════════════════    │
 │  ║                                                 ║    │
@@ -575,12 +575,12 @@ RÉSISTANCE = 0 → Arc cassé
 │  ║                 .                               ║    │
 │  ║               .   (trajectoire)                 ║    │
 │  ║             .                                   ║    │
-│  ║           🏹 (Arc)                              ║    │
+│  ║           🔫 (Cannon)                           ║    │
 │  ║                                                 ║    │
 │  ═══════════════════════════════════════════════════    │
 │                                                         │
-│  🏹 x3                              ⏸️ PAUSE            │
-│  Flèches restantes                                      │
+│  🔫 x3                              ⏸️ PAUSE            │
+│  Tirs restants                                          │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -600,9 +600,9 @@ RÉSISTANCE = 0 → Arc cassé
 │               CHOISIS UN UPGRADE                        │
 │                                                         │
 │   ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
-│   │     🛡️      │ │     🏹      │ │     ⚔️      │      │
+│   │     🛡️      │ │     🔫      │ │     ⚔️      │      │
 │   │             │ │             │ │             │      │
-│   │ +1 DURABI-  │ │ +1 FLÈCHE   │ │ +1 DÉGÂT    │      │
+│   │ +1 DURABI-  │ │ +1 TIR      │ │ +1 DÉGÂT    │      │
 │   │   LITÉ      │ │             │ │             │      │
 │   │             │ │             │ │             │      │
 │   │  ⚪ Commun   │ │  ⚪ Commun   │ │  ⚪ Commun   │      │
@@ -629,8 +629,8 @@ RÉSISTANCE = 0 → Arc cassé
 │                     Vague atteinte: 3                   │
 │                                                         │
 │                    💎 89 gemmes                         │
-│                    👾 23 ennemis tués                   │
-│                    🏹 12 flèches tirées                 │
+│                    👾 23 monstres tués                  │
+│                    🔫 12 tirs tirés                     │
 │                                                         │
 │            ═══════════════════════════                  │
 │                                                         │
@@ -659,20 +659,20 @@ RÉSISTANCE = 0 → Arc cassé
 │  ← RETOUR              🏪 BOUTIQUE         💎 1,250    │
 │                                                         │
 │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐           │
-│  │  ARCS  │ │RÉPARER │ │ SKINS  │ │ GEMMES │           │
+│  │CANNONS │ │RÉPARER │ │ SKINS  │ │ GEMMES │           │
 │  └────────┘ └────────┘ └────────┘ └────────┘           │
 │                                                         │
 │  ═══════════════════════════════════════════════════    │
 │                                                         │
-│   🏹 ARC RENFORCÉ           ✅ POSSÉDÉ                  │
+│   🔫 CANNON RENFORCÉ        ✅ POSSÉDÉ                  │
 │   PV: 25 | Résistance: 15                              │
 │                                                         │
-│   🏹 ARC ÉLITE              500 💎                      │
+│   🔫 CANNON ÉLITE           500 💎                      │
 │   PV: 30 | Résistance: 20 | +5% dégâts                 │
 │   [ACHETER]                                            │
 │                                                         │
-│   🏹 ARC LÉGENDAIRE         2,500 💎                    │
-│   PV: 35 | Résistance: 25 | +1 flèche                  │
+│   🔫 CANNON LÉGENDAIRE      2,500 💎                    │
+│   PV: 35 | Résistance: 25 | +1 tir                     │
 │   [ACHETER]                                            │
 │                                                         │
 │  ═══════════════════════════════════════════════════    │
@@ -686,7 +686,7 @@ RÉSISTANCE = 0 → Arc cassé
 |-------|-----|-------|
 | Splash/Logo | ✅ | ✅ |
 | Menu principal | ✅ Simple | ✅ Complet |
-| Sélection arc | ❌ | ✅ |
+| Sélection cannon | ❌ | ✅ |
 | Gameplay | ✅ | ✅ |
 | Pause | ✅ | ✅ |
 | Upgrade (entre vagues) | ✅ | ✅ |
@@ -694,7 +694,7 @@ RÉSISTANCE = 0 → Arc cassé
 | Game Over | ✅ | ✅ |
 | Victoire | ✅ | ✅ |
 | Boutique | ❌ | ✅ |
-| Collection arcs | ❌ | ✅ |
+| Collection cannons | ❌ | ✅ |
 | Cosmétiques | ❌ | ✅ |
 | Battle Pass | ❌ | ✅ |
 | Paramètres | ✅ Simple | ✅ Complet |
@@ -810,27 +810,27 @@ RÉSISTANCE = 0 → Arc cassé
 
 | Jour | Tâche | Livrable |
 |------|-------|----------|
-| **1** | Setup projet Unity + Arc + Swipe input | Arc visible, détecte swipe |
+| **1** | Setup projet Unity + Cannon + Swipe input | Cannon visible, détecte swipe |
 | **2** | Trajectoire prédictive (ligne pointillée) | Ligne suit le doigt |
-| **3** | Flèche + Physique rebonds (murs) | Flèche rebondit |
-| **4** | Ennemis + Collision + Durabilité flèche | Ennemis meurent, flèche s'use |
-| **5** | Contre-attaque + PV Arc + Game Over | Boucle complète |
+| **3** | Tir + Physique rebonds (murs) | Tir rebondit |
+| **4** | Monstres + Collision + Durabilité tir | Monstres meurent, tir s'use |
+| **5** | Contre-attaque + PV Cannon + Game Over | Boucle complète |
 | **6** | Système vagues (4) + UI Upgrades | Progression fonctionne |
 | **7** | Polish + Effets basiques + Test | MVP jouable |
 
 ### ✅ Checklist MVP
 
-- [ ] Arc fixe en bas
+- [ ] Cannon fixe en bas
 - [ ] Swipe pour viser
 - [ ] Ligne trajectoire prédictive
-- [ ] Flèche avec rebonds
-- [ ] Flèche durabilité (4 PV)
-- [ ] 2 types d'ennemis (1 PV, 2 PV)
-- [ ] Rebond sur ennemis
-- [ ] Contre-attaque des ennemis
-- [ ] PV Arc (20)
+- [ ] Tir avec rebonds
+- [ ] Tir durabilité (4 PV)
+- [ ] 2 types de monstres (1 PV, 2 PV)
+- [ ] Rebond sur monstres
+- [ ] Contre-attaque des monstres
+- [ ] PV Cannon (20)
 - [ ] 4 vagues
-- [ ] 3 flèches/vague
+- [ ] 3 tirs/vague
 - [ ] 3 upgrades basiques
 - [ ] Écran upgrade entre vagues
 - [ ] Game Over
@@ -840,7 +840,7 @@ RÉSISTANCE = 0 → Arc cassé
 
 ## Phase 2 : Polish (Semaine 2)
 
-- [ ] Plus d'ennemis (fort, tank)
+- [ ] Plus de monstres (fort, tank)
 - [ ] Obstacles variés
 - [ ] Plus d'upgrades (5-6)
 - [ ] Effets sonores complets
@@ -860,9 +860,9 @@ RÉSISTANCE = 0 → Arc cassé
 ## Phase 4 : Méta-progression (Semaine 4)
 
 - [ ] Boutique
-- [ ] Plusieurs arcs (3-4)
+- [ ] Plusieurs cannons (3-4)
 - [ ] Système de résistance
-- [ ] Réparation arcs
+- [ ] Réparation cannons
 - [ ] Sauvegarde progression
 
 ## Phase 5 : Contenu (Mois 2)
@@ -870,7 +870,7 @@ RÉSISTANCE = 0 → Arc cassé
 - [ ] Vagues procédurales
 - [ ] Système de boss
 - [ ] Raretés d'upgrades
-- [ ] Nouveaux types d'ennemis (5+)
+- [ ] Nouveaux types de monstres (5+)
 - [ ] Nouveaux obstacles (4+)
 
 ## Phase 6 : Live Ops (Mois 3+)
@@ -897,17 +897,17 @@ Assets/
 │   │   ├── UpgradeManager.cs
 │   │   └── SaveManager.cs
 │   ├── Player/
-│   │   ├── BowController.cs
-│   │   ├── BowHealth.cs
-│   │   ├── ArrowController.cs
-│   │   ├── ArrowDurability.cs
+│   │   ├── CannonController.cs
+│   │   ├── CannonHealth.cs
+│   │   ├── BulletController.cs
+│   │   ├── BulletDurability.cs
 │   │   └── TrajectoryLine.cs
-│   ├── Enemies/
-│   │   ├── Enemy.cs
-│   │   ├── EnemyHealth.cs
-│   │   ├── EnemyAttack.cs
-│   │   ├── EnemySpawner.cs
-│   │   └── EnemyData.cs (ScriptableObject)
+│   ├── Monsters/
+│   │   ├── Monster.cs
+│   │   ├── MonsterHealth.cs
+│   │   ├── MonsterAttack.cs
+│   │   ├── MonsterSpawner.cs
+│   │   └── MonsterData.cs (ScriptableObject)
 │   ├── Obstacles/
 │   │   └── Obstacle.cs
 │   ├── Input/
@@ -931,13 +931,13 @@ Assets/
 │       ├── ShopUI.cs
 │       └── GameOverUI.cs
 ├── Prefabs/
-│   ├── Arrow.prefab
-│   ├── Enemies/
+│   ├── Bullet.prefab
+│   ├── Monsters/
 │   └── Effects/
 ├── ScriptableObjects/
-│   ├── EnemyData/
+│   ├── MonsterData/
 │   ├── UpgradeData/
-│   ├── ArcData/
+│   ├── CannonData/
 │   └── WaveData/
 ├── Scenes/
 │   ├── MainMenu.unity
@@ -954,7 +954,7 @@ Assets/
 
 ## 14.2 Formules clés
 
-### Trajectoire prédictive
+### Trajectoire prédictive (balle)
 
 ```csharp
 // Position à l'instant t
@@ -968,7 +968,7 @@ for (float t = 0; t < maxTime; t += step)
 {
     Vector2 point = GetTrajectoryPoint(startPos, velocity, t);
     lineRenderer.SetPosition(i, point);
-    
+
     // Check collision pour rebond
     if (Physics2D.Raycast(...)) { /* calculer nouveau rebond */ }
 }
@@ -1069,6 +1069,6 @@ int GetEnemyMaxHP(int waveNumber)
 
 ---
 
-**Document créé pour Arrow Strike**  
-**Développeur : RDH**  
+**Document créé pour Monster Cannon**
+**Développeur : RDH**
 **Février 2026**

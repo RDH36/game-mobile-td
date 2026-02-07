@@ -1,8 +1,9 @@
-# ARROW STRIKE — MVP TASK LIST
+# MONSTER CANNON — MVP TASK LIST
 
 **Version :** 1.0
 **Ref :** Arrow_Strike_GDD_v2.md
 **Objectif :** MVP jouable en 7 jours (30 min/jour)
+**Status :** MVP CORE COMPLETE ✓ (gameplay complet, polish en cours)
 
 ---
 
@@ -17,20 +18,20 @@
 
 ---
 
-## JOUR 1 — Setup Projet + Arc + Input
+## JOUR 1 — Setup Projet + Cannon + Input
 
 ### 1.1 Setup projet (P0)
 - [x] Configurer la scene de jeu (camera orthographique 2D, ratio mobile 9:16)
 - [x] Creer les murs (4 bords ecran) avec BoxCollider2D — `GameSetup.cs` (dynamique au runtime)
-- [x] Definir les layers : Player, Arrow, Enemy, Wall, Obstacle — `SetupLayers.cs` (Editor)
+- [x] Definir les layers : Player, Bullet, Enemy, Wall, Obstacle — `SetupLayers.cs` (Editor)
 - [x] Creer l'architecture de dossiers (Scripts/, Prefabs/, ScriptableObjects/, Art/, Scenes/)
 - [x] Configurer le New Input System pour touch/swipe — `PlayerInputActions.inputactions`
 
-### 1.2 Arc du joueur (P0)
-- [x] Creer le GameObject Arc (sprite placeholder, position fixe en bas) — Bow @ (0,-4,0)
+### 1.2 Cannon du joueur (P0)
+- [x] Creer le GameObject Cannon (sprite placeholder, position fixe en bas) — Bow @ (0,-4,0)
 - [x] Script `BowController.cs` : detecter swipe (direction + puissance)
-- [x] Feedback visuel : rotation de l'arc selon la direction du swipe
-- [x] Script `BowHealth.cs` : PV de l'arc (20 PV par defaut)
+- [x] Feedback visuel : rotation du cannon selon la direction du swipe
+- [x] Script `BowHealth.cs` : PV du cannon (20 PV par defaut)
 
 ### 1.3 Input Swipe (P0)
 - [x] Script `SwipeDetector.cs` avec le New Input System — InputActions inline (touch + mouse)
@@ -50,29 +51,29 @@
 - [x] Limiter la prediction — 1 rebond visible seulement (plus de skill)
 - [x] Faire disparaitre la ligne au moment du tir
 - [x] Bloquer les tirs vers le bas (direction.y minimum)
-- [x] Mur du bas repositionne au-dessus du bow (fleches ne redescendent pas)
+- [x] Mur du bas repositionne au-dessus du bow (balles ne redescendent pas)
 
 ---
 
-## JOUR 3 — Fleche + Physique des Rebonds
+## JOUR 3 — Balle + Physique des Rebonds
 
-### 3.1 Fleche (P0)
+### 3.1 Balle (P0)
 - [x] Creer le prefab Arrow (sprite jaune, Rigidbody2D gravite 0, CircleCollider2D) — `Assets/Prefabs/Arrow.prefab`
 - [x] Script `ArrowController.cs` : lancement + rotation vers direction de vol
-- [x] Script `ArrowDurability.cs` : durabilite de la fleche (4 PV par defaut)
-- [x] La fleche disparait quand durabilite = 0
+- [x] Script `ArrowDurability.cs` : durabilite de la balle (4 PV par defaut)
+- [x] La balle disparait quand durabilite = 0
 
 ### 3.2 Systeme de rebonds (P0)
-- [x] PhysicsMaterial2D (bounciness=1, friction=0) applique en code sur fleche + murs
+- [x] PhysicsMaterial2D (bounciness=1, friction=0) applique en code sur balle + murs
 - [x] Rebond sur les obstacles
 - [x] Rebond sur les ennemis (+ degats) — `ArrowCollisionHandler.cs`
-- [x] Chaque touche ennemi = fleche -1 PV de durabilite
+- [x] Chaque touche ennemi = balle -1 PV de durabilite
 - [x] Timer anti-boucle infinie — `ArrowLifetime.cs` (8s max)
 
-### 3.3 Gestion des fleches par vague (P1)
-- [x] Limiter le nombre de fleches par vague (3 par defaut) — `ArrowManager.cs`
-- [x] Bloquer le tir quand plus de fleches disponibles
-- [x] Attendre la fin de la fleche en cours avant de pouvoir tirer la suivante
+### 3.3 Gestion des balles par vague (P1)
+- [x] Limiter le nombre de balles par vague (3 par defaut) — `ArrowManager.cs`
+- [x] Bloquer le tir quand plus de balles disponibles
+- [x] Attendre la fin de la balle en cours avant de pouvoir tirer la suivante
 
 ---
 
@@ -86,11 +87,11 @@
 - [x] Script `EnemyHealth.cs` : gerer les PV, mourir quand PV = 0
 - [x] Script `Enemy.cs` : initialiser depuis EnemyData
 
-### 4.2 Collisions fleche/ennemi (P0)
-- [x] Detecter la collision fleche → ennemi
-- [x] Appliquer les degats a l'ennemi (degats de la fleche)
-- [x] Reduire la durabilite de la fleche (-1)
-- [x] Faire rebondir la fleche apres impact — `EnemyBounce.cs` (PhysicsMaterial2D en code)
+### 4.2 Collisions balle/ennemi (P0)
+- [x] Detecter la collision balle → ennemi
+- [x] Appliquer les degats a l'ennemi (degats de la balle)
+- [x] Reduire la durabilite de la balle (-1)
+- [x] Faire rebondir la balle apres impact — `EnemyBounce.cs` (PhysicsMaterial2D en code)
 - [x] Effet visuel : flash blanc sur l'ennemi touche — `EnemyFlash.cs`
 
 ### 4.3 Spawner d'ennemis (P1)
@@ -105,18 +106,18 @@
 
 ### 5.1 Contre-attaque des ennemis (P1)
 - [x] Script `EnemyCounterAttack.cs` : apres chaque tir du joueur, les ennemis survivants attaquent
-- [x] Chaque ennemi survivant inflige ses degats a l'arc
-- [x] Animation/feedback visuel de la contre-attaque — `EnemyProjectile.cs` (projectile orange-rouge vole de l'ennemi vers l'arc)
-- [x] Screen flash rouge quand l'arc prend des degats — `ScreenFlash.cs`
+- [x] Chaque ennemi survivant inflige ses degats au cannon
+- [x] Animation/feedback visuel de la contre-attaque — `EnemyProjectile.cs` (projectile orange-rouge vole de l'ennemi vers le cannon)
+- [x] Screen flash rouge quand le cannon prend des degats — `ScreenFlash.cs`
 
-### 5.2 PV de l'arc (P1)
-- [x] Afficher les PV de l'arc dans le HUD (DebugHUD pour l'instant)
+### 5.2 PV du cannon (P1)
+- [x] Afficher les PV du cannon dans le HUD (DebugHUD pour l'instant)
 - [x] Reduire les PV quand les ennemis contre-attaquent
-- [x] Feedback visuel quand l'arc perd des PV (screenshake via Feel MMCameraShaker) — `CameraShake.cs`
+- [x] Feedback visuel quand le cannon perd des PV (screenshake via Feel MMCameraShaker) — `CameraShake.cs`
 
 ### 5.3 Conditions de fin (P0)
-- [x] Game Over quand arc PV = 0
-- [x] Game Over quand 0 fleches restantes ET ennemis encore vivants
+- [x] Game Over quand cannon PV = 0
+- [x] Game Over quand 0 balles restantes ET ennemis encore vivants
 - [x] Victoire quand tous les ennemis de la vague sont elimines → `GameState.WaveComplete`
 - [x] Script `GameManager.cs` : gerer les etats du jeu (Playing, WaveComplete, GameOver, Victory) — deja fait Jour 1
 
@@ -142,8 +143,8 @@
 - [x] Script `UpgradeManager.cs` : gerer les upgrades du run
 - [x] Creer ScriptableObject `UpgradeData.cs` (nom, description, effet, cout)
 - [x] Configurer 3 upgrades MVP :
-  - [x] +1 Durabilite fleche (cout : 10 gemmes)
-  - [x] +1 Fleche par vague (cout : 15 gemmes)
+  - [x] +1 Durabilite balle (cout : 10 gemmes)
+  - [x] +1 Balle par vague (cout : 15 gemmes)
   - [x] +1 Degat par touche (cout : 20 gemmes)
 - [x] Proposer 3 upgrades aleatoires entre chaque vague
 - [x] Appliquer l'upgrade choisi aux stats du joueur
@@ -163,11 +164,11 @@
 ## JOUR 7 — UI + Polish + Effets
 
 ### 7.1 HUD In-Game (P1)
-- [x] Afficher les PV de l'arc (barre de vie en haut)
-- [x] Afficher le nombre de fleches restantes (en bas a gauche)
+- [x] Afficher les PV du cannon (barre de vie en haut)
+- [x] Afficher le nombre de balles restantes (en bas a gauche)
 - [x] Afficher la vague actuelle (ex: "VAGUE 2/4" en haut a droite)
 - [x] Afficher les gemmes collectees (en haut a gauche)
-- [x] Afficher les buffs actifs pres de l'arc (PV, Fleche, Degat)
+- [x] Afficher les buffs actifs pres du cannon (PV, Balle, Degat)
 - [x] Banner "VAGUE X TERMINEE !" (3s pause avant upgrades)
 - [x] Bouton Pause
 
@@ -194,7 +195,7 @@
 - [x] Bouton "Menu Principal" / "Rejouer"
 
 ### 7.5 Menu Principal (P2)
-- [x] UI : titre du jeu "Arrow Strike"
+- [x] UI : titre du jeu "Monster Cannon"
 - [x] Bouton "JOUER"
 - [x] Scene separee ou overlay (overlay Canvas, sort order 30)
 
@@ -205,18 +206,27 @@
 - [x] Time.timeScale = 0 en pause
 
 ### 7.7 Effets visuels / Juice (P3)
-- [ ] Screenshake a l'impact fleche/ennemi
-- [ ] Particules d'explosion a la destruction d'un ennemi
-- [ ] Trail de la fleche pendant le vol (TrailRenderer)
-- [ ] Flash blanc quand un ennemi est touche
-- [ ] Squash & stretch de l'arc pendant la visee
+- [x] Screenshake a l'impact balle/ennemi — `CameraShake.cs` via Feel MMCameraShakeEvent
+- [x] Particules d'explosion a la destruction d'un ennemi — `deathFXPrefab` dans EnemySpawner
+- [x] Trail de la balle pendant le vol (TrailRenderer) — dans `ArrowController.cs`
+- [x] Flash blanc quand un ennemi est touche — `EnemyFlash.cs`
+- [ ] Squash & stretch du cannon pendant la visee
+- [x] Barre de vie ennemis (sprite-based) — `EnemyHealthBar.cs`
+- [x] Visual upgrade fleche (AllIn1SpriteShader) — `ArrowVisualUpgrade.cs`
+- [x] Popup combo "COMBO xN!" avec Feel spring — `ComboPopup.cs`
+- [x] Effet coin collect avec Feel spring — `CoinCollectFX.cs`
+- [x] Damage popup "-X" avec Feel spring — `DamagePopup.cs`
+- [x] Screen flash rouge (degats cannon) + gold (combo) — `ScreenFlash.cs`
+- [x] Feel spring animations sur UI panels + HUD bumps
+- [x] Police Showpop sur tous les popups (DamagePopup, ComboPopup, CoinCollectFX)
+- [x] Fix boucle rebond infini — perturbation angle ±3° + timeout 5s
 
 ### 7.8 Audio SFX placeholder (P3)
-- [ ] Son de tir fleche (swoosh)
+- [ ] Son de tir balle (swoosh)
 - [ ] Son de rebond mur (boing/thud)
 - [ ] Son d'impact ennemi (hit)
 - [ ] Son de destruction ennemi (pop/explosion)
-- [ ] Son de degat a l'arc (ouch/crack)
+- [ ] Son de degat au cannon (ouch/crack)
 - [ ] Son de collecte gemme (ding)
 - [ ] Son d'upgrade choisi (level up)
 
@@ -224,16 +234,16 @@
 
 ## RESUME MVP
 
-| Categorie | Taches | Priorite |
-|-----------|--------|----------|
-| Setup + Arc + Input | 14 | P0 |
-| Trajectoire | 5 | P1 |
-| Fleche + Rebonds | 11 | P0 |
-| Ennemis + Collisions | 11 | P0-P1 |
-| Contre-attaque + Game Over | 10 | P0-P1 |
-| Vagues + Upgrades + Gemmes | 20 | P1 |
-| UI + Polish | 30 | P1-P3 |
-| **TOTAL** | **~101 taches** | |
+| Categorie | Taches | Priorite | Status |
+|-----------|--------|----------|--------|
+| Setup + Cannon + Input | 14 | P0 | ✓ DONE |
+| Trajectoire | 5 | P1 | ✓ DONE |
+| Balle + Rebonds | 11 | P0 | ✓ DONE |
+| Ennemis + Collisions | 11 | P0-P1 | ✓ DONE |
+| Contre-attaque + Game Over | 10 | P0-P1 | ✓ DONE |
+| Vagues + Upgrades + Gemmes | 20 | P1 | ✓ DONE |
+| UI + Polish | 39 | P1-P3 | 32/39 (P3 SFX restant) |
+| **TOTAL** | **~110 taches** | | **97% COMPLETE** |
 
 ## Scripts a creer
 

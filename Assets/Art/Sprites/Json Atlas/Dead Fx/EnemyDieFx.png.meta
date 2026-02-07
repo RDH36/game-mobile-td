@@ -1,0 +1,1495 @@
+fileFormatVersion: 2
+guid: 27cf5deb15909904f98a03f7cfa8323c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2477087811006874983
+    second: EnemyDieFx_0
+  - first:
+      213: -1204260058728127409
+    second: EnemyDieFx_1
+  - first:
+      213: -5146170582388721425
+    second: EnemyDieFx_2
+  - first:
+      213: 58365428686459835
+    second: EnemyDieFx_3
+  - first:
+      213: -4069217948325888368
+    second: EnemyDieFx_4
+  - first:
+      213: 7398640465797739184
+    second: EnemyDieFx_5
+  - first:
+      213: -771586797879857197
+    second: EnemyDieFx_6
+  - first:
+      213: -4327730168926493226
+    second: EnemyDieFx_7
+  - first:
+      213: -6192203752895949983
+    second: EnemyDieFx_8
+  - first:
+      213: 2437455896670351531
+    second: EnemyDieFx_9
+  - first:
+      213: -3259685330257616743
+    second: EnemyDieFx_10
+  - first:
+      213: 7192179672445004502
+    second: EnemyDieFx_11
+  - first:
+      213: -1516989019164913030
+    second: EnemyDieFx_12
+  - first:
+      213: 2299607221529920429
+    second: EnemyDieFx_13
+  - first:
+      213: -2235328964032350660
+    second: EnemyDieFx_14
+  - first:
+      213: -689060629917899377
+    second: EnemyDieFx_15
+  - first:
+      213: 4936544226982091068
+    second: EnemyDieFx_16
+  - first:
+      213: 7465213612670224044
+    second: EnemyDieFx_17
+  - first:
+      213: 3129180073701949333
+    second: EnemyDieFx_18
+  - first:
+      213: 7189377168746681299
+    second: EnemyDieFx_19
+  - first:
+      213: -2943866026101073177
+    second: EnemyDieFx_20
+  - first:
+      213: -3156614229067437488
+    second: EnemyDieFx_21
+  - first:
+      213: 7738603775627135974
+    second: EnemyDieFx_22
+  - first:
+      213: -7868705597874017378
+    second: EnemyDieFx_23
+  - first:
+      213: -6308728369947677987
+    second: EnemyDieFx_24
+  - first:
+      213: 4616824152420789483
+    second: EnemyDieFx_25
+  - first:
+      213: 3864612804880606478
+    second: EnemyDieFx_26
+  - first:
+      213: -1896995966705504168
+    second: EnemyDieFx_27
+  - first:
+      213: -8229413482191595281
+    second: EnemyDieFx_28
+  - first:
+      213: -3142863357238386839
+    second: EnemyDieFx_29
+  - first:
+      213: -1878715663256509233
+    second: EnemyDieFx_30
+  - first:
+      213: 38362250163453824
+    second: EnemyDieFx_31
+  - first:
+      213: -7148838511177174688
+    second: EnemyDieFx_32
+  - first:
+      213: -3758902950061936077
+    second: EnemyDieFx_33
+  - first:
+      213: -6859882044752210218
+    second: EnemyDieFx_34
+  - first:
+      213: -9029161840138770800
+    second: EnemyDieFx_35
+  - first:
+      213: 8590673218905203073
+    second: EnemyDieFx_36
+  - first:
+      213: -7576974913459518763
+    second: EnemyDieFx_37
+  - first:
+      213: -3072204487140647543
+    second: EnemyDieFx_38
+  - first:
+      213: -7527475998443335113
+    second: EnemyDieFx_39
+  - first:
+      213: -5849183496450832831
+    second: EnemyDieFx_40
+  - first:
+      213: 8675759192411348300
+    second: EnemyDieFx_41
+  - first:
+      213: -5150459676462765127
+    second: EnemyDieFx_42
+  - first:
+      213: -4057506530635821949
+    second: EnemyDieFx_43
+  - first:
+      213: 6126072935748439934
+    second: EnemyDieFx_44
+  - first:
+      213: -7653218761189005222
+    second: EnemyDieFx_45
+  - first:
+      213: -3458680454824361734
+    second: EnemyDieFx_46
+  - first:
+      213: -1710398502967952957
+    second: EnemyDieFx_47
+  - first:
+      213: -5578209997941745099
+    second: EnemyDieFx_48
+  - first:
+      213: -9019683524487710176
+    second: EnemyDieFx_49
+  - first:
+      213: -9198480605103511144
+    second: EnemyDieFx_50
+  - first:
+      213: 4539009380239917691
+    second: EnemyDieFx_51
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: EnemyDieFx_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 400
+        width: 96
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99a3c7392cd9f9dd0800000000000000
+      internalID: -2477087811006874983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_1
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 491
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f44a1566bdb994fe0800000000000000
+      internalID: -1204260058728127409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_2
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 474
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe8b723fe112598b0800000000000000
+      internalID: -5146170582388721425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_3
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 388
+        width: 66
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb315045c0b5fc000800000000000000
+      internalID: 58365428686459835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_4
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 373
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09e346ce5db3787c0800000000000000
+      internalID: -4069217948325888368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_5
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 322
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b274b0dd404da660800000000000000
+      internalID: 7398640465797739184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_6
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 346
+        width: 19
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3df6df635e5ca45f0800000000000000
+      internalID: -771586797879857197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_7
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 306
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d525653750d0f3c0800000000000000
+      internalID: -4327730168926493226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_8
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 277
+        width: 108
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 163dbc39e7fd01aa0800000000000000
+      internalID: -6192203752895949983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_9
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 258
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba0b7bc493593d120800000000000000
+      internalID: 2437455896670351531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_10
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 227
+        width: 172
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9906172767543c2d0800000000000000
+      internalID: -3259685330257616743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_11
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 153
+        width: 96
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6daaed86e41cfc360800000000000000
+      internalID: 7192179672445004502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_12
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 238
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a72d180468292fae0800000000000000
+      internalID: -1516989019164913030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_13
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 222
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da3c63a8598d9ef10800000000000000
+      internalID: 2299607221529920429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_14
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 136
+        width: 66
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c36b5b686248af0e0800000000000000
+      internalID: -2235328964032350660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_15
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 111
+        width: 96
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8569050207ff66f0800000000000000
+      internalID: -689060629917899377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_16
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 208
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c39d54bc1d0228440800000000000000
+      internalID: 4936544226982091068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_17
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 189
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca68e937a34c99760800000000000000
+      internalID: 7465213612670224044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_18
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 150
+        width: 75
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59f3c3ba2b41d6b20800000000000000
+      internalID: 3129180073701949333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_19
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 189
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d3137ba17cc5c360800000000000000
+      internalID: 7189377168746681299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_20
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 96
+        width: 96
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ea97ef42794527d0800000000000000
+      internalID: -2943866026101073177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_21
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 180
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05aed7745147134d0800000000000000
+      internalID: -3156614229067437488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_22
+      rect:
+        serializedVersion: 2
+        x: 852
+        y: 173
+        width: 29
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6eb80cf022b056b60800000000000000
+      internalID: 7738603775627135974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_23
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 187
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9b679ce2fdbcc290800000000000000
+      internalID: -7868705597874017378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_24
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 97
+        width: 66
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddae6dcf8f4e278a0800000000000000
+      internalID: -6308728369947677987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_25
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 89
+        width: 66
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bec2c7b0b11421040800000000000000
+      internalID: 4616824152420789483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_26
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 70
+        width: 111
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e05a555dedcd1a530800000000000000
+      internalID: 3864612804880606478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_27
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 165
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8507b2018348ca5e0800000000000000
+      internalID: -1896995966705504168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_28
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 79
+        width: 70
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe8d82c0a004bcd80800000000000000
+      internalID: -8229413482191595281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_29
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 152
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96fd63e9d6e4264d0800000000000000
+      internalID: -3142863357238386839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_30
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 11
+        width: 127
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc422a1ee067de5e0800000000000000
+      internalID: -1878715663256509233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_31
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 141
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08ff6c5634a488000800000000000000
+      internalID: 38362250163453824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_32
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 119
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 061f6a010493acc90800000000000000
+      internalID: -7148838511177174688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_33
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 69
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 332f364bea1b5dbc0800000000000000
+      internalID: -3758902950061936077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_34
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 84
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d6d67120adccc0a0800000000000000
+      internalID: -6859882044752210218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_35
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 92
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 096240b1529f1b280800000000000000
+      internalID: -9029161840138770800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_36
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 78
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1816e4af6c3383770800000000000000
+      internalID: 8590673218905203073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_37
+      rect:
+        serializedVersion: 2
+        x: 996
+        y: 79
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d20333f57d29d690800000000000000
+      internalID: -7576974913459518763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_38
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 44
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98dde92db465d55d0800000000000000
+      internalID: -3072204487140647543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_39
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 69
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73291813678098790800000000000000
+      internalID: -7527475998443335113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_40
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 50
+        width: 31
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14688fba99683dea0800000000000000
+      internalID: -5849183496450832831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_41
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 67
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4d1284f40d766870800000000000000
+      internalID: 8675759192411348300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_42
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 12
+        width: 108
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bba67a6634e588b0800000000000000
+      internalID: -5150459676462765127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_43
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 58
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38ccf97de47d0b7c0800000000000000
+      internalID: -4057506530635821949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_44
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 52
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7f8b63b0ee240550800000000000000
+      internalID: 6126072935748439934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_45
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 12
+        width: 108
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5869fec51e4ac590800000000000000
+      internalID: -7653218761189005222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_46
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 11
+        width: 108
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af08b92837c4000d0800000000000000
+      internalID: -3458680454824361734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_47
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 11
+        width: 109
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c93c36af917348e0800000000000000
+      internalID: -1710398502967952957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_48
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 52
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53a562ebf873692b0800000000000000
+      internalID: -5578209997941745099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_49
+      rect:
+        serializedVersion: 2
+        x: 852
+        y: 47
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02a77707f95a3d280800000000000000
+      internalID: -9019683524487710176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_50
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 28
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8992c7310ae685080800000000000000
+      internalID: -9198480605103511144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyDieFx_51
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 34
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b72cd5d8bfccdfe30800000000000000
+      internalID: 4539009380239917691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      EnemyDieFx_0: -2477087811006874983
+      EnemyDieFx_1: -1204260058728127409
+      EnemyDieFx_10: -3259685330257616743
+      EnemyDieFx_11: 7192179672445004502
+      EnemyDieFx_12: -1516989019164913030
+      EnemyDieFx_13: 2299607221529920429
+      EnemyDieFx_14: -2235328964032350660
+      EnemyDieFx_15: -689060629917899377
+      EnemyDieFx_16: 4936544226982091068
+      EnemyDieFx_17: 7465213612670224044
+      EnemyDieFx_18: 3129180073701949333
+      EnemyDieFx_19: 7189377168746681299
+      EnemyDieFx_2: -5146170582388721425
+      EnemyDieFx_20: -2943866026101073177
+      EnemyDieFx_21: -3156614229067437488
+      EnemyDieFx_22: 7738603775627135974
+      EnemyDieFx_23: -7868705597874017378
+      EnemyDieFx_24: -6308728369947677987
+      EnemyDieFx_25: 4616824152420789483
+      EnemyDieFx_26: 3864612804880606478
+      EnemyDieFx_27: -1896995966705504168
+      EnemyDieFx_28: -8229413482191595281
+      EnemyDieFx_29: -3142863357238386839
+      EnemyDieFx_3: 58365428686459835
+      EnemyDieFx_30: -1878715663256509233
+      EnemyDieFx_31: 38362250163453824
+      EnemyDieFx_32: -7148838511177174688
+      EnemyDieFx_33: -3758902950061936077
+      EnemyDieFx_34: -6859882044752210218
+      EnemyDieFx_35: -9029161840138770800
+      EnemyDieFx_36: 8590673218905203073
+      EnemyDieFx_37: -7576974913459518763
+      EnemyDieFx_38: -3072204487140647543
+      EnemyDieFx_39: -7527475998443335113
+      EnemyDieFx_4: -4069217948325888368
+      EnemyDieFx_40: -5849183496450832831
+      EnemyDieFx_41: 8675759192411348300
+      EnemyDieFx_42: -5150459676462765127
+      EnemyDieFx_43: -4057506530635821949
+      EnemyDieFx_44: 6126072935748439934
+      EnemyDieFx_45: -7653218761189005222
+      EnemyDieFx_46: -3458680454824361734
+      EnemyDieFx_47: -1710398502967952957
+      EnemyDieFx_48: -5578209997941745099
+      EnemyDieFx_49: -9019683524487710176
+      EnemyDieFx_5: 7398640465797739184
+      EnemyDieFx_50: -9198480605103511144
+      EnemyDieFx_51: 4539009380239917691
+      EnemyDieFx_6: -771586797879857197
+      EnemyDieFx_7: -4327730168926493226
+      EnemyDieFx_8: -6192203752895949983
+      EnemyDieFx_9: 2437455896670351531
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

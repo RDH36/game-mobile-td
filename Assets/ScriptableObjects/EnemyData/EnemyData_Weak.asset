@@ -15,6 +15,8 @@ MonoBehaviour:
   enemyName: Weak
   maxHP: 1
   damage: 1
-  color: {r: 0.2, g: 0.8, b: 0.3, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  sprite: {fileID: 7428088102567837456, guid: 83ce5409209ab894ea118bc4d8628ddb, type: 3}
+  animController: {fileID: 9100000, guid: 4512e2aa940e10345b9947b0ea711750, type: 2}
   gemDropMin: 1
   gemDropMax: 2

@@ -1,0 +1,16 @@
+Monster09.png
+size:245,114
+filter:Linear,Linear
+pma:true
+Body
+bounds:2,2,110,118
+offsets:9,9,128,136
+rotate:90
+Mouth
+bounds:201,44,68,42
+offsets:9,7,86,55
+rotate:90
+Shade
+bounds:122,3,109,77
+offsets:10,5,129,87
+rotate:90

@@ -1,0 +1,14 @@
+Gun08.png
+size:274,140
+filter:Linear,Linear
+pma:true
+body
+bounds:123,2,136,103
+offsets:7,10,150,123
+rotate:90
+gun
+bounds:228,23,44,115
+offsets:9,2,63,123
+shade
+bounds:2,3,119,135
+offsets:5,5,130,146

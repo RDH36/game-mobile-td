@@ -71,6 +71,10 @@ public class GemManager : MonoBehaviour
         _killsThisArrow++;
         _totalKillsThisRun++;
         OnGemsChanged?.Invoke(_gemsThisRun);
+
+        // Coin collect pop effect at enemy position
+        if (gems > 0 && enemy != null)
+            CoinCollectFX.Create(enemy.transform.position, gems);
     }
 
     void HandleArrowLanded()
@@ -82,7 +86,9 @@ public class GemManager : MonoBehaviour
             _gemsThisRun += comboBonus;
             _gemsThisWave += comboBonus;
             OnGemsChanged?.Invoke(_gemsThisRun);
-            Debug.Log($"COMBO x{_killsThisArrow}! +{comboBonus} bonus gems");
+
+            // Combo popup with Feel spring + camera shake + flash
+            ComboPopup.Create(_killsThisArrow, comboBonus);
         }
         _killsThisArrow = 0;
     }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using MoreMountains.Feedbacks;
 
 public class PauseScreenUI : MonoBehaviour
 {
@@ -51,7 +52,11 @@ public class PauseScreenUI : MonoBehaviour
 
         _isPaused = true;
         Time.timeScale = 0f;
-        if (_panel != null) _panel.SetActive(true);
+        if (_panel != null)
+        {
+            _panel.SetActive(true);
+            SpringInChildren(_panel.transform);
+        }
     }
 
     void Resume()
@@ -59,6 +64,22 @@ public class PauseScreenUI : MonoBehaviour
         _isPaused = false;
         Time.timeScale = 1f;
         if (_panel != null) _panel.SetActive(false);
+    }
+
+    void SpringInChildren(Transform parent)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform child = parent.GetChild(i);
+            var spring = child.GetComponent<MMSpringScale>();
+            if (spring == null)
+            {
+                spring = child.gameObject.AddComponent<MMSpringScale>();
+                spring.TimeScaleMode = MMSpringComponentBase.TimeScaleModes.Unscaled;
+            }
+            spring.MoveToInstant(Vector3.zero);
+            spring.MoveTo(Vector3.one);
+        }
     }
 
     void Quit()

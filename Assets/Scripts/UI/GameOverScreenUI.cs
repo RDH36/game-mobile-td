@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using MoreMountains.Feedbacks;
 
 public class GameOverScreenUI : MonoBehaviour
 {
@@ -71,6 +72,7 @@ public class GameOverScreenUI : MonoBehaviour
     {
         if (_panel == null) return;
         _panel.SetActive(true);
+        SpringInChildren(_panel.transform);
 
         var wave = FindFirstObjectByType<WaveManager>();
         var gems = GemManager.Instance;
@@ -82,7 +84,20 @@ public class GameOverScreenUI : MonoBehaviour
         if (_killsText != null)
             _killsText.text = $"Ennemis tues : {(gems != null ? gems.TotalKillsThisRun : 0)}";
         if (_arrowsText != null)
-            _arrowsText.text = $"Fleches tirees : {(gems != null ? gems.TotalArrowsFiredThisRun : 0)}";
+            _arrowsText.text = $"Tirs effectues : {(gems != null ? gems.TotalArrowsFiredThisRun : 0)}";
+    }
+
+    void SpringInChildren(Transform parent)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform child = parent.GetChild(i);
+            var spring = child.GetComponent<MMSpringScale>();
+            if (spring == null)
+                spring = child.gameObject.AddComponent<MMSpringScale>();
+            spring.MoveToInstant(Vector3.zero);
+            spring.MoveTo(Vector3.one);
+        }
     }
 
     void OnReplay()

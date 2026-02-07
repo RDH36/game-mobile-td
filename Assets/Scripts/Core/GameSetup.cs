@@ -9,6 +9,13 @@ public class GameSetup : MonoBehaviour
     void Awake()
     {
         CreateWalls();
+
+        // DamagePopup singleton (editable in inspector if added manually, or auto-created here)
+        if (DamagePopup.Instance == null)
+        {
+            var go = new GameObject("DamagePopupConfig");
+            go.AddComponent<DamagePopup>();
+        }
     }
 
     void CreateWalls()
@@ -43,28 +50,10 @@ public class GameSetup : MonoBehaviour
     {
         GameObject wall = new GameObject(name);
         wall.transform.position = position;
-        wall.transform.localScale = new Vector3(size.x, size.y, 1f);
         wall.layer = LayerMask.NameToLayer("Wall");
 
         BoxCollider2D col = wall.AddComponent<BoxCollider2D>();
+        col.size = size;
         col.sharedMaterial = new PhysicsMaterial2D("WallBounce") { bounciness = 1f, friction = 0f };
-
-        SpriteRenderer sr = wall.AddComponent<SpriteRenderer>();
-        sr.sprite = CreateWhiteSprite();
-        sr.color = new Color(0.3f, 0.3f, 0.4f, 1f);
-        sr.sortingOrder = -10;
-    }
-
-    private static Sprite _whiteSprite;
-    Sprite CreateWhiteSprite()
-    {
-        if (_whiteSprite != null) return _whiteSprite;
-        Texture2D tex = new Texture2D(4, 4);
-        Color[] pixels = new Color[16];
-        for (int i = 0; i < 16; i++) pixels[i] = Color.white;
-        tex.SetPixels(pixels);
-        tex.Apply();
-        _whiteSprite = Sprite.Create(tex, new Rect(0, 0, 4, 4), new Vector2(0.5f, 0.5f), 4f);
-        return _whiteSprite;
     }
 }

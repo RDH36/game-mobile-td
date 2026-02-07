@@ -15,6 +15,8 @@ MonoBehaviour:
   enemyName: Medium
   maxHP: 2
   damage: 2
-  color: {r: 0.2, g: 0.4, b: 0.9, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  sprite: {fileID: 676226567990917180, guid: a9ece417dc718ef4b91ad3ead1c6d21a, type: 3}
+  animController: {fileID: 9100000, guid: 283c8eab47662c94094c7bd9a8edae6c, type: 2}
   gemDropMin: 3
   gemDropMax: 5

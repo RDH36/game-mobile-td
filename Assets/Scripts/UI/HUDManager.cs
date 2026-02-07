@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using MoreMountains.Feedbacks;
 
 public class HUDManager : MonoBehaviour
 {
@@ -16,6 +17,12 @@ public class HUDManager : MonoBehaviour
     private TextMeshProUGUI _buffDamage;
     private Button _pauseButton;
     private GameObject _hudContent;
+
+    // Feel springs for HUD juice
+    private MMSpringScale _gemSpring;
+    private MMSpringScale _arrowSpring;
+    private MMSpringScale _waveSpring;
+    private MMSpringScale _bannerSpring;
 
     private BowHealth _bowHealth;
     private ArrowManager _arrowManager;
@@ -79,6 +86,15 @@ public class HUDManager : MonoBehaviour
                 int waveNum = _waveManager != null ? _waveManager.CurrentWave : 0;
                 if (_bannerText != null) _bannerText.text = $"VAGUE {waveNum} TERMINEE !";
                 _bannerObj.SetActive(true);
+
+                // Spring pop-in on banner text (not bg)
+                if (_bannerText != null)
+                {
+                    if (_bannerSpring == null)
+                        _bannerSpring = _bannerText.gameObject.AddComponent<MMSpringScale>();
+                    _bannerSpring.MoveToInstant(Vector3.zero);
+                    _bannerSpring.MoveTo(Vector3.one);
+                }
             }
             else
             {
@@ -168,7 +184,6 @@ public class HUDManager : MonoBehaviour
     {
         if (_hpFill == null || _hpText == null) return;
         _hpFill.fillAmount = (float)current / max;
-        _hpFill.color = current > max * 0.5f ? new Color(0.2f, 0.8f, 0.2f) : new Color(0.9f, 0.2f, 0.2f);
         _hpText.text = $"{current}/{max}";
     }
 
@@ -177,18 +192,29 @@ public class HUDManager : MonoBehaviour
         if (_arrowText == null) return;
         _arrowText.text = $"x{remaining}";
         _arrowText.color = remaining > 0 ? Color.white : new Color(0.9f, 0.3f, 0.3f);
+        BumpSpring(ref _arrowSpring, _arrowText.transform.parent);
     }
 
     void UpdateWave(int current, int total)
     {
         if (_waveText == null) return;
         _waveText.text = $"VAGUE {current}/{total}";
+        BumpSpring(ref _waveSpring, _waveText.transform.parent);
     }
 
     void UpdateGems(int total)
     {
         if (_gemText == null) return;
         _gemText.text = $"{total}";
+        BumpSpring(ref _gemSpring, _gemText.transform.parent);
+    }
+
+    void BumpSpring(ref MMSpringScale spring, Transform target)
+    {
+        if (target == null) return;
+        if (spring == null)
+            spring = target.gameObject.AddComponent<MMSpringScale>();
+        spring.Bump(new Vector3(0.12f, 0.12f, 0f));
     }
 
     void OnUpgradeApplied(UpgradeData data)
@@ -207,7 +233,7 @@ public class HUDManager : MonoBehaviour
         if (_buffDurability != null)
             _buffDurability.text = dur > 0 ? $"PV +{dur}" : "";
         if (_buffArrows != null)
-            _buffArrows.text = arr > 0 ? $"Fleche +{arr}" : "";
+            _buffArrows.text = arr > 0 ? $"Tir +{arr}" : "";
         if (_buffDamage != null)
             _buffDamage.text = dmg > 0 ? $"Degat +{dmg}" : "";
     }

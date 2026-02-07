@@ -85,11 +85,12 @@ public class EnemyCounterAttack : MonoBehaviour
                 {
                     projectileHit = true;
                     _bowHealth.TakeDamage(dmg);
+                    DamagePopup.Create(_bowHealth.transform.position, dmg);
 
                     if (ScreenFlash.Instance != null)
                         ScreenFlash.Instance.FlashRed();
                     if (CameraShake.Instance != null)
-                        CameraShake.Instance.Shake(0.1f + dmg * 0.05f, 0.15f);
+                        CameraShake.Instance.Shake(0.25f + dmg * 0.1f, 0.3f);
                 }
             );
 

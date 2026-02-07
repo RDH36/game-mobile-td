@@ -4,6 +4,7 @@ using UnityEngine;
 public class ArrowController : MonoBehaviour
 {
     private Rigidbody2D _rb;
+    private TrailRenderer _trail;
 
     public Vector2 Velocity => _rb != null ? _rb.linearVelocity : Vector2.zero;
 
@@ -18,9 +19,19 @@ public class ArrowController : MonoBehaviour
             friction = 0f
         };
         _rb.sharedMaterial = bounceMat;
-        // Also set on collider
         var col = GetComponent<Collider2D>();
         if (col != null) col.sharedMaterial = bounceMat;
+
+        // Setup trail
+        _trail = gameObject.AddComponent<TrailRenderer>();
+        _trail.time = 0.12f;
+        _trail.startWidth = 0.12f;
+        _trail.endWidth = 0f;
+        _trail.startColor = new Color(1f, 0.9f, 0.3f, 0.8f);
+        _trail.endColor = new Color(1f, 0.5f, 0.1f, 0f);
+        _trail.material = new Material(Shader.Find("Sprites/Default"));
+        _trail.sortingOrder = 2;
+        _trail.numCornerVertices = 2;
     }
 
     public void Launch(Vector2 direction, float speed)

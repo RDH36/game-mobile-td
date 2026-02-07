@@ -4,6 +4,8 @@ using System.Collections.Generic;
 public class ArrowManager : MonoBehaviour
 {
     [SerializeField] private GameObject arrowPrefab;
+    [SerializeField] private GameObject shootFXPrefab;
+    [SerializeField] private GameObject deathFXPrefab;
     [SerializeField] private int arrowsPerWave = 3;
 
     private int _arrowsRemaining;
@@ -60,6 +62,17 @@ public class ArrowManager : MonoBehaviour
         ArrowController arrow = arrowGO.GetComponent<ArrowController>();
         arrow.Launch(direction, speed);
 
+        // Cannon shoot animation
+        PlayCannonShootAnimation();
+
+        // Spawn muzzle flash FX
+        if (shootFXPrefab != null)
+        {
+            Vector3 fxPos = _bow.transform.position + (Vector3)(direction.normalized * 0.8f);
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Instantiate(shootFXPrefab, fxPos, Quaternion.Euler(0, 0, angle));
+        }
+
         // Apply upgrade bonuses to this arrow
         ArrowDurability durability = arrowGO.GetComponent<ArrowDurability>();
         if (durability != null && _bonusDurability > 0)
@@ -68,6 +81,9 @@ public class ArrowManager : MonoBehaviour
         ArrowCollisionHandler collision = arrowGO.GetComponent<ArrowCollisionHandler>();
         if (collision != null && _bonusDamage > 0)
             collision.SetDamage(1 + _bonusDamage); // base 1 + bonus
+
+        // Visual upgrade effects via AllIn1SpriteShader
+        ArrowVisualUpgrade.Apply(arrowGO, _bonusDamage, _bonusDurability);
 
         // Listen for arrow destruction
         if (durability != null)
@@ -133,6 +149,16 @@ public class ArrowManager : MonoBehaviour
         _bonusDurability = 0;
         _bonusDamage = 0;
         _bonusArrowCount = 0;
+    }
+
+    public GameObject DeathFXPrefab => deathFXPrefab;
+
+    void PlayCannonShootAnimation()
+    {
+        if (_bow == null) return;
+        var animator = _bow.GetComponent<Animator>();
+        if (animator != null)
+            animator.SetTrigger("Shoot");
     }
 }
 

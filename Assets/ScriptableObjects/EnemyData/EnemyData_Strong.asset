@@ -15,6 +15,8 @@ MonoBehaviour:
   enemyName: Strong
   maxHP: 3
   damage: 2
-  color: {r: 0.9, g: 0.2, b: 0.2, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  sprite: {fileID: 830061088618782089, guid: d085f9da7de4f3342bc9efb57d8d640f, type: 3}
+  animController: {fileID: 9100000, guid: 68bbed99e70c8a44494cf3cb3d59254b, type: 2}
   gemDropMin: 5
   gemDropMax: 10
