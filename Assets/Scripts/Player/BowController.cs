@@ -74,6 +74,7 @@ public class BowController : MonoBehaviour
         _spring.Bump(new Vector3(-kick, kick, 0f));
 
         float speed = Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, power);
+        SFXManager.Instance?.PlayCannonFire();
         OnShoot?.Invoke(direction, speed);
     }
 }

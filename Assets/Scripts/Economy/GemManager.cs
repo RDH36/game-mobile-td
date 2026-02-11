@@ -72,7 +72,7 @@ public class GemManager : MonoBehaviour
         _totalKillsThisRun++;
         OnGemsChanged?.Invoke(_gemsThisRun);
 
-        // Coin collect pop effect at enemy position
+        // Coin collect pop effect at enemy position (coins fly to HUD + SFX on arrival)
         if (gems > 0 && enemy != null)
             CoinCollectFX.Create(enemy.transform.position, gems);
     }

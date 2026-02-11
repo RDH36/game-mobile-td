@@ -28,6 +28,7 @@ public class ArrowCollisionHandler : MonoBehaviour
         {
             ContactPoint2D contact = collision.GetContact(0);
             SpawnWallHitParticles(contact.point, contact.normal);
+            SFXManager.Instance?.PlayHitWall();
 
             // Slight random angle perturbation to prevent infinite bounce loops
             var rb = GetComponent<Rigidbody2D>();
@@ -45,6 +46,7 @@ public class ArrowCollisionHandler : MonoBehaviour
         // Hit enemy — deal damage + reduce durability
         if (layer == LayerMask.NameToLayer("Enemy"))
         {
+            SFXManager.Instance?.PlayMonsterHit();
             EnemyHealth health = collision.gameObject.GetComponent<EnemyHealth>();
             if (health != null)
             {

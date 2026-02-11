@@ -51,6 +51,7 @@ public class MainMenuUI : MonoBehaviour
 
     void OnPlay()
     {
+        SFXManager.Instance?.PlayUIClick();
         if (GameManager.Instance != null)
             GameManager.Instance.StartGame();
     }

@@ -5,6 +5,9 @@ using MoreMountains.Feedbacks;
 
 public class HUDManager : MonoBehaviour
 {
+    public static HUDManager Instance { get; private set; }
+    public static Vector3 GemCounterWorldPos { get; private set; }
+
     private Image _hpFill;
     private TextMeshProUGUI _hpText;
     private TextMeshProUGUI _gemText;
@@ -31,6 +34,7 @@ public class HUDManager : MonoBehaviour
 
     void Awake()
     {
+        Instance = this;
         FindUIElements();
         if (_bannerObj != null) _bannerObj.SetActive(false);
     }
@@ -58,6 +62,29 @@ public class HUDManager : MonoBehaviour
         if (_arrowManager != null) UpdateArrows(_arrowManager.ArrowsRemaining);
         if (_waveManager != null) UpdateWave(_waveManager.CurrentWave, _waveManager.TotalWaves);
         UpdateGems(0);
+    }
+
+    void LateUpdate()
+    {
+        // Update gem counter world position for flying coins
+        if (_gemText != null && Camera.main != null)
+        {
+            Canvas canvas = GetComponent<Canvas>();
+            // For Overlay canvas, pass null; for Camera canvas, pass worldCamera
+            Camera uiCam = (canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay)
+                ? canvas.worldCamera : null;
+            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(uiCam, _gemText.transform.position);
+            // Z = distance from camera to world Z=0
+            float camDist = Mathf.Abs(Camera.main.transform.position.z);
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, camDist));
+            GemCounterWorldPos = new Vector3(worldPos.x, worldPos.y, 0f);
+        }
+    }
+
+    public static void BumpGemCounter()
+    {
+        if (Instance == null) return;
+        Instance.BumpSpring(ref Instance._gemSpring, Instance._gemText != null ? Instance._gemText.transform.parent : null);
     }
 
     void OnDestroy()
@@ -176,6 +203,7 @@ public class HUDManager : MonoBehaviour
 
     void OnPauseClicked()
     {
+        SFXManager.Instance?.PlayUIClick();
         var pauseUI = FindFirstObjectByType<PauseScreenUI>();
         if (pauseUI != null) pauseUI.TogglePause();
     }

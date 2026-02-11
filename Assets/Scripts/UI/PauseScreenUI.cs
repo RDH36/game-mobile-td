@@ -61,6 +61,7 @@ public class PauseScreenUI : MonoBehaviour
 
     void Resume()
     {
+        SFXManager.Instance?.PlayUIClick();
         _isPaused = false;
         Time.timeScale = 1f;
         if (_panel != null) _panel.SetActive(false);
@@ -84,6 +85,7 @@ public class PauseScreenUI : MonoBehaviour
 
     void Quit()
     {
+        SFXManager.Instance?.PlayUIClick();
         Resume();
         if (GameManager.Instance != null)
             GameManager.Instance.RestartGame();

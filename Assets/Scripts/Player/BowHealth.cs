@@ -21,6 +21,7 @@ public class BowHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHP = Mathf.Max(0, currentHP - damage);
+        SFXManager.Instance?.PlayCannonDamage();
         OnHPChanged?.Invoke(currentHP, maxHP);
         OnDamageTaken?.Invoke(damage);
 

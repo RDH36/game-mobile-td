@@ -221,14 +221,26 @@
 - [x] Police Showpop sur tous les popups (DamagePopup, ComboPopup, CoinCollectFX)
 - [x] Fix boucle rebond infini — perturbation angle ±3° + timeout 5s
 
-### 7.8 Audio SFX placeholder (P3)
-- [ ] Son de tir balle (swoosh)
-- [ ] Son de rebond mur (boing/thud)
-- [ ] Son d'impact ennemi (hit)
+### 7.8 Audio SFX + Music (P3)
+- [x] SFXManager singleton avec AudioSource SFX + 2x Music (crossfade)
+- [x] Son de tir balle — `cannon-fire.mp3`
+- [x] Son de rebond mur — `hit-wall.wav`
+- [x] Son d'impact ennemi — `moster-hit.wav`
+- [x] Son de degat au cannon — `cannon-damage-receive.wav`
+- [x] Son de collecte gemme — `coins.wav`
+- [x] Son clic UI sur tous les boutons — `click2.ogg`
+- [x] Musique menu — `menu-bg-music.wav` (crossfade auto)
+- [x] Musique action — `action-bg-music.wav` (crossfade auto)
 - [ ] Son de destruction ennemi (pop/explosion)
-- [ ] Son de degat au cannon (ouch/crack)
-- [ ] Son de collecte gemme (ding)
 - [ ] Son d'upgrade choisi (level up)
+
+### 7.9 Coin Fly-to-UI Effect (P3)
+- [x] CoinCollectFX : "+N" popup or (Feel MMSpringScale + MMSpringPosition)
+- [x] Flying coins scatter puis volent vers le HUD gem counter (Feel springs)
+- [x] HUD gem counter bump a l'arrivee des coins (Feel MMSpringScale)
+
+### 7.10 Bug Fixes
+- [x] Fix Android build : WaveData deplace dans Resources/Waves/ (Resources.LoadAll fonctionne en build)
 
 ---
 
@@ -242,8 +254,8 @@
 | Ennemis + Collisions | 11 | P0-P1 | ✓ DONE |
 | Contre-attaque + Game Over | 10 | P0-P1 | ✓ DONE |
 | Vagues + Upgrades + Gemmes | 20 | P1 | ✓ DONE |
-| UI + Polish | 39 | P1-P3 | 32/39 (P3 SFX restant) |
-| **TOTAL** | **~110 taches** | | **97% COMPLETE** |
+| UI + Polish + Audio | 49 | P1-P3 | 45/49 |
+| **TOTAL** | **~120 taches** | | **98% COMPLETE** |
 
 ## Scripts a creer
 

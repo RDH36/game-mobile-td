@@ -165,12 +165,14 @@ public class UpgradeScreenUI : MonoBehaviour
 
     void OnUpgradeClicked(int index)
     {
+        SFXManager.Instance?.PlayUIClick();
         if (_upgradeManager != null)
             _upgradeManager.SelectUpgrade(index);
     }
 
     void OnSkipClicked()
     {
+        SFXManager.Instance?.PlayUIClick();
         if (_upgradeManager != null)
             _upgradeManager.SkipUpgrade();
     }

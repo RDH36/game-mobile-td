@@ -116,20 +116,8 @@ public class WaveManager : MonoBehaviour
 
     WaveData[] LoadWaveData()
     {
-        #if UNITY_EDITOR
-        string[] guids = UnityEditor.AssetDatabase.FindAssets("t:WaveData");
-        WaveData[] data = new WaveData[guids.Length];
-        for (int i = 0; i < guids.Length; i++)
-        {
-            string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[i]);
-            data[i] = UnityEditor.AssetDatabase.LoadAssetAtPath<WaveData>(path);
-        }
-        System.Array.Sort(data, (a, b) => string.Compare(a.name, b.name, System.StringComparison.Ordinal));
-        return data;
-        #else
-        WaveData[] loaded = Resources.LoadAll<WaveData>("");
+        WaveData[] loaded = Resources.LoadAll<WaveData>("Waves");
         System.Array.Sort(loaded, (a, b) => string.Compare(a.name, b.name, System.StringComparison.Ordinal));
         return loaded;
-        #endif
     }
 }

@@ -97,12 +97,14 @@ public class VictoryScreenUI : MonoBehaviour
 
     void OnReplay()
     {
+        SFXManager.Instance?.PlayUIClick();
         if (GameManager.Instance != null)
             GameManager.Instance.RestartGame();
     }
 
     void OnMenu()
     {
+        SFXManager.Instance?.PlayUIClick();
         if (GameManager.Instance != null)
             GameManager.Instance.RestartGame();
     }
