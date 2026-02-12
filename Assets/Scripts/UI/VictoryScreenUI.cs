@@ -72,14 +72,14 @@ public class VictoryScreenUI : MonoBehaviour
         _panel.SetActive(true);
         SpringInChildren(_panel.transform);
 
-        var gems = GemManager.Instance;
+        var coins = CoinManager.Instance;
 
         if (_gemsText != null)
-            _gemsText.text = $"Gemmes : {(gems != null ? gems.GemsThisRun : 0)}";
+            _gemsText.text = $"Coins : {(coins != null ? coins.CoinsThisRun : 0)}";
         if (_killsText != null)
-            _killsText.text = $"Ennemis tues : {(gems != null ? gems.TotalKillsThisRun : 0)}";
+            _killsText.text = $"Ennemis tues : {(coins != null ? coins.TotalKillsThisRun : 0)}";
         if (_arrowsText != null)
-            _arrowsText.text = $"Tirs effectues : {(gems != null ? gems.TotalArrowsFiredThisRun : 0)}";
+            _arrowsText.text = $"Tirs effectues : {(coins != null ? coins.TotalArrowsFiredThisRun : 0)}";
     }
 
     void SpringInChildren(Transform parent)

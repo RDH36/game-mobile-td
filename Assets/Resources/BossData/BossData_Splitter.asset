@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b434f2020a50e8a478e613f6d121a74d, type: 3}
+  m_Name: BossData_Splitter
+  m_EditorClassIdentifier: Assembly-CSharp::BossData
+  bossName: Splitter
+  bossWave: 40
+  maxHP: 45
+  damage: 4
+  coinDropMin: 50
+  coinDropMax: 80
+  color: {r: 0.9, g: 0.3, b: 0.6, a: 1}
+  sprite: {fileID: -7050602531569767413, guid: e6e125acb7a361b4d9a80cb916e2cb9a, type: 3}
+  animController: {fileID: 9100000, guid: f13d67afb7d585747b5f3af23b5960cb, type: 2}
+  pattern: 3
+  skinRewardId: Diamond

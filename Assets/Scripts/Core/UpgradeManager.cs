@@ -8,6 +8,7 @@ public class UpgradeManager : MonoBehaviour
     private UpgradeData[] _allUpgrades;
     private UpgradeData[] _currentChoices;
     private bool _waitingForSelection;
+    private WaveManager _waveManager;
 
     public UpgradeData[] CurrentChoices => _currentChoices;
     public bool WaitingForSelection => _waitingForSelection;
@@ -24,6 +25,7 @@ public class UpgradeManager : MonoBehaviour
     void Start()
     {
         _allUpgrades = LoadUpgradeData();
+        _waveManager = FindFirstObjectByType<WaveManager>();
 
         if (GameManager.Instance != null)
             GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
@@ -76,10 +78,10 @@ public class UpgradeManager : MonoBehaviour
 
         UpgradeData chosen = _currentChoices[choiceIndex];
 
-        // Check if player can afford it
-        if (GemManager.Instance != null && !GemManager.Instance.SpendGems(chosen.cost))
+        int scaledCost = GetScaledCost(chosen);
+        if (CoinManager.Instance != null && !CoinManager.Instance.SpendCoins(scaledCost))
         {
-            Debug.Log($"Not enough gems for {chosen.upgradeName} (cost: {chosen.cost})");
+            Debug.Log($"Not enough coins for {chosen.upgradeName} (cost: {scaledCost})");
             return;
         }
 
@@ -121,6 +123,21 @@ public class UpgradeManager : MonoBehaviour
         }
 
         Debug.Log($"Upgrade applied: {data.upgradeName} (+{data.value})");
+    }
+
+    public int GetScaledCost(UpgradeData data)
+    {
+        int wave = _waveManager != null ? _waveManager.CurrentWave : 1;
+        return Mathf.CeilToInt(data.cost * GetPriceMultiplier(wave));
+    }
+
+    public static float GetPriceMultiplier(int wave)
+    {
+        if (wave >= 40) return 4f;
+        if (wave >= 30) return 3f;
+        if (wave >= 20) return 2f;
+        if (wave >= 10) return 1.5f;
+        return 1f;
     }
 
     UpgradeData[] LoadUpgradeData()

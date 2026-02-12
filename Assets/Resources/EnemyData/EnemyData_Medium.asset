@@ -20,3 +20,10 @@ MonoBehaviour:
   animController: {fileID: 9100000, guid: 283c8eab47662c94094c7bd9a8edae6c, type: 2}
   gemDropMin: 3
   gemDropMax: 5
+  variants:
+  - sprite: {fileID: 676226567990917180, guid: a9ece417dc718ef4b91ad3ead1c6d21a, type: 3}
+    animController: {fileID: 9100000, guid: 283c8eab47662c94094c7bd9a8edae6c, type: 2}
+  - sprite: {fileID: -7916641960694644148, guid: 2fcd27feece84744980afec9c0f84d04, type: 3}
+    animController: {fileID: 9100000, guid: 0114afb132ab9a14291ecbf912d9bd5c, type: 2}
+  - sprite: {fileID: 1247639805334285748, guid: 63681bb6ede451f4694eaba1dd187ce1, type: 3}
+    animController: {fileID: 9100000, guid: 0c17684e5ec505a47bfca4ecc88635ba, type: 2}

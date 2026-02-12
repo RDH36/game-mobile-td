@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63a62fa437dde2e44a90fa7f9a9f1ff5, type: 3}
+  m_Name: EnemyData_Elite
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: Elite
+  maxHP: 5
+  damage: 4
+  color: {r: 0.6, g: 0.2, b: 0.8, a: 1}
+  sprite: {fileID: 3571680773333596369, guid: 310fcf99ff4a93f488f50f3b708c55e5, type: 3}
+  animController: {fileID: 9100000, guid: 6df1a492c96c34941a3d78361acfb1bd, type: 2}
+  gemDropMin: 8
+  gemDropMax: 12
+  variants:
+  - sprite: {fileID: 3571680773333596369, guid: 310fcf99ff4a93f488f50f3b708c55e5, type: 3}
+    animController: {fileID: 9100000, guid: 6df1a492c96c34941a3d78361acfb1bd, type: 2}
+  - sprite: {fileID: -903068856065163021, guid: a2994f74924108048a39052c33875f71, type: 3}
+    animController: {fileID: 9100000, guid: e915a2c92abdf24428589b7a1b27c122, type: 2}
+  - sprite: {fileID: -2218667528619133870, guid: 120e4f59bf17b024ca44d07b85405dc2, type: 3}
+    animController: {fileID: 9100000, guid: 64c2e721c4423204cad09a541cbfa780, type: 2}

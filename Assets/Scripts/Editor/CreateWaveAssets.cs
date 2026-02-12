@@ -22,8 +22,8 @@ public static class CreateWaveAssets
             strong.maxHP = 3;
             strong.damage = 3;
             strong.color = new Color(0.9f, 0.2f, 0.2f, 1f);
-            strong.gemDropMin = 5;
-            strong.gemDropMax = 10;
+            strong.coinDropMin = 5;
+            strong.coinDropMax = 10;
             AssetDatabase.CreateAsset(strong, "Assets/ScriptableObjects/EnemyData/EnemyData_Strong.asset");
         }
 

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b434f2020a50e8a478e613f6d121a74d, type: 3}
+  m_Name: BossData_Speedy
+  m_EditorClassIdentifier: Assembly-CSharp::BossData
+  bossName: Speedy
+  bossWave: 20
+  maxHP: 25
+  damage: 3
+  coinDropMin: 30
+  coinDropMax: 50
+  color: {r: 0.4, g: 0.3, b: 0.9, a: 1}
+  sprite: {fileID: -9177592986674479940, guid: ff4c207404fa424458de37e2ec05216a, type: 3}
+  animController: {fileID: 9100000, guid: 0acbab8f23e9cbb4db1bd642ad8f5676, type: 2}
+  pattern: 1
+  skinRewardId: Silver

@@ -7,7 +7,9 @@ public class GameOverScreenUI : MonoBehaviour
 {
     private GameObject _panel;
     private TextMeshProUGUI _waveText;
-    private TextMeshProUGUI _gemsText;
+    private TextMeshProUGUI _bestWaveText;
+    private TextMeshProUGUI _coinsText;
+    private TextMeshProUGUI _gemsEarnedText;
     private TextMeshProUGUI _killsText;
     private TextMeshProUGUI _arrowsText;
     private Button _replayButton;
@@ -44,7 +46,9 @@ public class GameOverScreenUI : MonoBehaviour
 
         _panel = panelT.gameObject;
         _waveText = FindTMP(panelT, "WaveStat");
-        _gemsText = FindTMP(panelT, "GemsStat");
+        _bestWaveText = FindTMP(panelT, "BestWaveStat");
+        _coinsText = FindTMP(panelT, "CoinsStat") ?? FindTMP(panelT, "GemsStat");
+        _gemsEarnedText = FindTMP(panelT, "GemsEarned");
         _killsText = FindTMP(panelT, "KillsStat");
         _arrowsText = FindTMP(panelT, "ArrowsStat");
 
@@ -75,16 +79,42 @@ public class GameOverScreenUI : MonoBehaviour
         SpringInChildren(_panel.transform);
 
         var wave = FindFirstObjectByType<WaveManager>();
-        var gems = GemManager.Instance;
+        var coins = CoinManager.Instance;
+        int currentWave = wave != null ? wave.CurrentWave : 0;
+
+        // Save high score
+        bool isNewBest = false;
+        if (SaveManager.Instance != null)
+            isNewBest = SaveManager.Instance.TrySetHighScore(currentWave);
+
+        int bestWave = SaveManager.Instance != null ? SaveManager.Instance.HighScore : currentWave;
+
+        // Permanent gems: premium currency, small drops
+        int gemsEarned = GetGemsForWave(currentWave);
+        if (SaveManager.Instance != null)
+            SaveManager.Instance.AddGems(gemsEarned);
 
         if (_waveText != null)
-            _waveText.text = $"Vague atteinte : {(wave != null ? wave.CurrentWave : 0)}";
-        if (_gemsText != null)
-            _gemsText.text = $"Gemmes : {(gems != null ? gems.GemsThisRun : 0)}";
+            _waveText.text = $"Vague atteinte : {currentWave}";
+        if (_bestWaveText != null)
+            _bestWaveText.text = isNewBest ? $"NOUVEAU RECORD ! Vague {bestWave}" : $"Meilleur : Vague {bestWave}";
+        if (_coinsText != null)
+            _coinsText.text = $"Coins : {(coins != null ? coins.CoinsThisRun : 0)}";
+        if (_gemsEarnedText != null)
+            _gemsEarnedText.text = $"Gems gagnes : +{gemsEarned}";
         if (_killsText != null)
-            _killsText.text = $"Ennemis tues : {(gems != null ? gems.TotalKillsThisRun : 0)}";
+            _killsText.text = $"Ennemis tues : {(coins != null ? coins.TotalKillsThisRun : 0)}";
         if (_arrowsText != null)
-            _arrowsText.text = $"Tirs effectues : {(gems != null ? gems.TotalArrowsFiredThisRun : 0)}";
+            _arrowsText.text = $"Tirs effectues : {(coins != null ? coins.TotalArrowsFiredThisRun : 0)}";
+    }
+
+    static int GetGemsForWave(int wave)
+    {
+        if (wave >= 40) return 8;
+        if (wave >= 30) return 5;
+        if (wave >= 20) return 3;
+        if (wave >= 10) return 2;
+        return 1;
     }
 
     void SpringInChildren(Transform parent)

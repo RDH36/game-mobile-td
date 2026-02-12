@@ -147,7 +147,7 @@ public class FlyingCoinController : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
 
         // Phase 2: Fly to HUD gem counter with Feel spring
-        Vector3 flyTarget = GetGemCounterWorldPos();
+        Vector3 flyTarget = GetCoinCounterWorldPos();
         _posSpring.MoveTo(flyTarget);
 
         // Shrink while flying
@@ -157,15 +157,15 @@ public class FlyingCoinController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         // On arrival: bump HUD only (SFX already played at spawn)
-        HUDManager.BumpGemCounter();
+        HUDManager.BumpCoinCounter();
 
         Destroy(gameObject);
     }
 
-    Vector3 GetGemCounterWorldPos()
+    Vector3 GetCoinCounterWorldPos()
     {
-        if (HUDManager.GemCounterWorldPos != Vector3.zero)
-            return HUDManager.GemCounterWorldPos;
+        if (HUDManager.CoinCounterWorldPos != Vector3.zero)
+            return HUDManager.CoinCounterWorldPos;
 
         // Fallback: top-left area of screen
         Camera cam = Camera.main;

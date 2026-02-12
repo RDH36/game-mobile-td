@@ -44,7 +44,7 @@ public class ComboPopup : MonoBehaviour
         subGO.transform.localPosition = new Vector3(0f, -0.7f, 0f);
         var subTmp = subGO.AddComponent<TextMeshPro>();
         if (_cachedFont != null) subTmp.font = _cachedFont;
-        subTmp.text = $"+{bonusGems} gems";
+        subTmp.text = $"+{bonusGems} coins";
         subTmp.fontSize = 3.5f;
         subTmp.fontStyle = FontStyles.Bold;
         subTmp.alignment = TextAlignmentOptions.Center;

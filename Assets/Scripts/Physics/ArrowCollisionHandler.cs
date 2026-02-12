@@ -46,6 +46,16 @@ public class ArrowCollisionHandler : MonoBehaviour
         // Hit enemy — deal damage + reduce durability
         if (layer == LayerMask.NameToLayer("Enemy"))
         {
+            // Check if boss is shielded
+            Boss boss = collision.gameObject.GetComponent<Boss>();
+            if (boss != null && boss.TryBlockDamage())
+            {
+                // Shield blocks damage — arrow still bounces and loses durability
+                SFXManager.Instance?.PlayHitWall();
+                _durability.TakeHit();
+                return;
+            }
+
             SFXManager.Instance?.PlayMonsterHit();
             EnemyHealth health = collision.gameObject.GetComponent<EnemyHealth>();
             if (health != null)

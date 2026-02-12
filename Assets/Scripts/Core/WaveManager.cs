@@ -1,11 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WaveManager : MonoBehaviour
 {
-    [SerializeField] private float delayBetweenWaves = 2f;
-
-    private WaveData[] _waves;
+    private WaveData[] _fixedWaves;
     private int _currentWaveIndex = -1;
     private EnemySpawner _spawner;
     private ArrowManager _arrowManager;
@@ -14,14 +13,23 @@ public class WaveManager : MonoBehaviour
     private float _nextWaveTimer;
     private bool _waitingForNextWave;
 
+    // EnemyData refs for infinite generation
+    private EnemyData _weak;
+    private EnemyData _medium;
+    private EnemyData _strong;
+    private EnemyData _elite;
+
+    // Boss data
+    private Dictionary<int, BossData> _bossByWave = new Dictionary<int, BossData>();
+
     public int CurrentWave => _currentWaveIndex + 1;
-    public int TotalWaves => _waves != null ? _waves.Length : 0;
-    public bool IsLastWave => _currentWaveIndex >= TotalWaves - 1;
+    public int FixedWaveCount => _fixedWaves != null ? _fixedWaves.Length : 0;
     public float NextWaveTimer => _nextWaveTimer;
     public bool WaitingForNextWave => _waitingForNextWave;
 
-    public event System.Action<int, int> OnWaveStarted;
+    public event System.Action<int> OnWaveStarted;
     public event System.Action<int> OnWaveCompleted;
+    public event System.Action<BossData> OnBossWaveStarted;
 
     void Start()
     {
@@ -29,9 +37,11 @@ public class WaveManager : MonoBehaviour
         _arrowManager = FindFirstObjectByType<ArrowManager>();
         _bowHealth = FindFirstObjectByType<BowHealth>();
 
-        _waves = LoadWaveData();
+        _fixedWaves = LoadWaveData();
+        LoadEnemyData();
+        LoadBossData();
 
-        if (_waves.Length == 0)
+        if (_fixedWaves.Length == 0)
         {
             Debug.LogError("WaveManager: No WaveData found!");
             return;
@@ -40,7 +50,6 @@ public class WaveManager : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
 
-        // Don't auto-start if in Menu state; wait for Playing
         if (GameManager.Instance == null || GameManager.Instance.CurrentState == GameState.Playing)
             StartWave(0);
     }
@@ -55,42 +64,79 @@ public class WaveManager : MonoBehaviour
     {
         if (state == GameState.Playing && _currentWaveIndex < 0)
         {
-            // First time Playing — start wave 1
             StartWave(0);
         }
         else if (state == GameState.WaveComplete)
         {
             OnWaveCompleted?.Invoke(CurrentWave);
-
-            if (IsLastWave)
-                StartCoroutine(VictorySequence());
-            else
-                StartCoroutine(NextWaveSequence());
+            StartCoroutine(NextWaveSequence());
         }
+    }
+
+    public bool IsBossWave(int waveNum)
+    {
+        return _bossByWave.ContainsKey(waveNum);
+    }
+
+    public BossData GetBossData(int waveNum)
+    {
+        _bossByWave.TryGetValue(waveNum, out BossData data);
+        return data;
     }
 
     void StartWave(int index)
     {
         _currentWaveIndex = index;
-        WaveData data = _waves[index];
+        int waveNum = index + 1;
 
-        GameManager.Instance?.SetState(GameState.Playing);
-        _spawner.SpawnWave(data.entries);
-        OnWaveStarted?.Invoke(CurrentWave, TotalWaves);
+        // Check for boss wave
+        if (IsBossWave(waveNum))
+        {
+            BossData bossData = _bossByWave[waveNum];
+            WaveEntry[] guards = GenerateBossGuards(waveNum);
+            GameManager.Instance?.SetState(GameState.Playing);
+            _spawner.SpawnBossWave(bossData, guards);
+            OnBossWaveStarted?.Invoke(bossData);
+            OnWaveStarted?.Invoke(CurrentWave);
+            int guardCount = 0;
+            if (guards != null) foreach (var g in guards) guardCount += g.count;
+            Debug.Log($"Wave {CurrentWave} started (BOSS): {bossData.bossName} — {bossData.maxHP} HP, pattern: {bossData.pattern}, guards: {guardCount}");
+            return;
+        }
 
-        Debug.Log($"Wave {CurrentWave}/{TotalWaves} started: {data.waveName} ({data.TotalEnemies} enemies)");
+        if (index < FixedWaveCount)
+        {
+            // Fixed SO waves (1-4)
+            WaveData data = _fixedWaves[index];
+            GameManager.Instance?.SetState(GameState.Playing);
+            _spawner.SpawnWave(data.entries);
+            OnWaveStarted?.Invoke(CurrentWave);
+            Debug.Log($"Wave {CurrentWave} started (fixed): {data.waveName} ({data.TotalEnemies} enemies)");
+        }
+        else
+        {
+            // Infinite generated waves (5+)
+            float hpMult = InfiniteWaveGenerator.GetHPMultiplier(waveNum);
+            float coinMult = InfiniteWaveGenerator.GetCoinMultiplier(waveNum);
+            WaveEntry[] entries = InfiniteWaveGenerator.Generate(waveNum, _weak, _medium, _strong, _elite);
+
+            GameManager.Instance?.SetState(GameState.Playing);
+            _spawner.SpawnWave(entries, hpMult, coinMult);
+            OnWaveStarted?.Invoke(CurrentWave);
+
+            int total = 0;
+            foreach (var e in entries) total += e.count;
+            Debug.Log($"Wave {CurrentWave} started (generated): {total} enemies, HP x{hpMult:F2}, Coins x{coinMult:F2}");
+        }
     }
 
     private IEnumerator NextWaveSequence()
     {
-        // Show "Wave Complete" state for a moment
         _waitingForNextWave = true;
         GameManager.Instance?.SetState(GameState.WaveComplete);
 
-        // Wait 3 seconds so player sees "VAGUE TERMINEE"
         yield return new WaitForSeconds(3f);
 
-        // Show upgrade selection and wait for player to pick
         GameManager.Instance?.SetState(GameState.UpgradeSelection);
 
         if (UpgradeManager.Instance != null)
@@ -101,17 +147,78 @@ public class WaveManager : MonoBehaviour
 
         _waitingForNextWave = false;
 
-        // Restore and start next wave
         _bowHealth.ResetHP();
         _arrowManager.ResetArrows();
         StartWave(_currentWaveIndex + 1);
     }
 
-    private IEnumerator VictorySequence()
+    WaveEntry[] GenerateBossGuards(int waveNum)
     {
-        Debug.Log("All waves complete! Victory!");
-        yield return new WaitForSeconds(1f);
-        GameManager.Instance?.SetState(GameState.Victory);
+        // Guard composition scales with boss difficulty
+        switch (waveNum)
+        {
+            case 10: // BlobKing — 3 weak guards
+                return new[] { new WaveEntry { enemyData = _weak, count = 3 } };
+
+            case 20: // Speedy — 3 weak + 1 medium
+                return new[]
+                {
+                    new WaveEntry { enemyData = _weak, count = 3 },
+                    new WaveEntry { enemyData = _medium, count = 1 }
+                };
+
+            case 30: // Guardian — 2 weak + 3 medium
+                return new[]
+                {
+                    new WaveEntry { enemyData = _weak, count = 2 },
+                    new WaveEntry { enemyData = _medium, count = 3 }
+                };
+
+            case 40: // Splitter — 3 medium + 2 strong
+                return new[]
+                {
+                    new WaveEntry { enemyData = _medium, count = 3 },
+                    new WaveEntry { enemyData = _strong, count = 2 }
+                };
+
+            case 50: // Overlord — 2 medium + 3 strong + 1 elite
+                return new[]
+                {
+                    new WaveEntry { enemyData = _medium, count = 2 },
+                    new WaveEntry { enemyData = _strong, count = 3 },
+                    new WaveEntry { enemyData = _elite, count = 1 }
+                };
+
+            default: // Any other boss wave — scale guards with wave number
+                int guardCount = Mathf.Min(3 + waveNum / 15, 8);
+                return new[] { new WaveEntry { enemyData = _medium ?? _weak, count = guardCount } };
+        }
+    }
+
+    void LoadEnemyData()
+    {
+        _weak = Resources.Load<EnemyData>("EnemyData/EnemyData_Weak");
+        _medium = Resources.Load<EnemyData>("EnemyData/EnemyData_Medium");
+        _strong = Resources.Load<EnemyData>("EnemyData/EnemyData_Strong");
+        _elite = Resources.Load<EnemyData>("EnemyData/EnemyData_Elite");
+
+        if (_weak == null) Debug.LogWarning("WaveManager: EnemyData_Weak not found in Resources/EnemyData/");
+        if (_medium == null) Debug.LogWarning("WaveManager: EnemyData_Medium not found in Resources/EnemyData/");
+        if (_strong == null) Debug.LogWarning("WaveManager: EnemyData_Strong not found in Resources/EnemyData/");
+        if (_elite == null) Debug.LogWarning("WaveManager: EnemyData_Elite not found in Resources/EnemyData/");
+    }
+
+    void LoadBossData()
+    {
+        BossData[] bosses = Resources.LoadAll<BossData>("BossData");
+        foreach (var boss in bosses)
+        {
+            if (boss.bossWave > 0)
+            {
+                _bossByWave[boss.bossWave] = boss;
+                Debug.Log($"WaveManager: Loaded boss '{boss.bossName}' for wave {boss.bossWave}");
+            }
+        }
     }
 
     WaveData[] LoadWaveData()

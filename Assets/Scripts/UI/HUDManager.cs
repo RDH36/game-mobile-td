@@ -6,11 +6,11 @@ using MoreMountains.Feedbacks;
 public class HUDManager : MonoBehaviour
 {
     public static HUDManager Instance { get; private set; }
-    public static Vector3 GemCounterWorldPos { get; private set; }
+    public static Vector3 CoinCounterWorldPos { get; private set; }
 
     private Image _hpFill;
     private TextMeshProUGUI _hpText;
-    private TextMeshProUGUI _gemText;
+    private TextMeshProUGUI _coinText;
     private TextMeshProUGUI _waveText;
     private TextMeshProUGUI _arrowText;
     private GameObject _bannerObj;
@@ -22,7 +22,7 @@ public class HUDManager : MonoBehaviour
     private GameObject _hudContent;
 
     // Feel springs for HUD juice
-    private MMSpringScale _gemSpring;
+    private MMSpringScale _coinSpring;
     private MMSpringScale _arrowSpring;
     private MMSpringScale _waveSpring;
     private MMSpringScale _bannerSpring;
@@ -30,7 +30,7 @@ public class HUDManager : MonoBehaviour
     private BowHealth _bowHealth;
     private ArrowManager _arrowManager;
     private WaveManager _waveManager;
-    private GemManager _gemManager;
+    private CoinManager _coinManager;
 
     void Awake()
     {
@@ -44,12 +44,13 @@ public class HUDManager : MonoBehaviour
         _bowHealth = FindFirstObjectByType<BowHealth>();
         _arrowManager = FindFirstObjectByType<ArrowManager>();
         _waveManager = FindFirstObjectByType<WaveManager>();
-        _gemManager = FindFirstObjectByType<GemManager>();
+        _coinManager = FindFirstObjectByType<CoinManager>();
 
         if (_bowHealth != null) _bowHealth.OnHPChanged += UpdateHP;
         if (_arrowManager != null) _arrowManager.OnArrowCountChanged += UpdateArrows;
-        if (_waveManager != null) _waveManager.OnWaveStarted += UpdateWave;
-        if (_gemManager != null) _gemManager.OnGemsChanged += UpdateGems;
+        if (_waveManager != null) _waveManager.OnWaveStarted += OnWaveStarted;
+        if (_waveManager != null) _waveManager.OnBossWaveStarted += OnBossWaveStarted;
+        if (_coinManager != null) _coinManager.OnCoinsChanged += UpdateCoins;
 
         if (GameManager.Instance != null)
             GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
@@ -60,39 +61,38 @@ public class HUDManager : MonoBehaviour
         // Initial values
         if (_bowHealth != null) UpdateHP(_bowHealth.CurrentHP, _bowHealth.MaxHP);
         if (_arrowManager != null) UpdateArrows(_arrowManager.ArrowsRemaining);
-        if (_waveManager != null) UpdateWave(_waveManager.CurrentWave, _waveManager.TotalWaves);
-        UpdateGems(0);
+        if (_waveManager != null) OnWaveStarted(_waveManager.CurrentWave);
+        UpdateCoins(0);
     }
 
     void LateUpdate()
     {
-        // Update gem counter world position for flying coins
-        if (_gemText != null && Camera.main != null)
+        // Update coin counter world position for flying coins
+        if (_coinText != null && Camera.main != null)
         {
             Canvas canvas = GetComponent<Canvas>();
-            // For Overlay canvas, pass null; for Camera canvas, pass worldCamera
             Camera uiCam = (canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay)
                 ? canvas.worldCamera : null;
-            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(uiCam, _gemText.transform.position);
-            // Z = distance from camera to world Z=0
+            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(uiCam, _coinText.transform.position);
             float camDist = Mathf.Abs(Camera.main.transform.position.z);
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, camDist));
-            GemCounterWorldPos = new Vector3(worldPos.x, worldPos.y, 0f);
+            CoinCounterWorldPos = new Vector3(worldPos.x, worldPos.y, 0f);
         }
     }
 
-    public static void BumpGemCounter()
+    public static void BumpCoinCounter()
     {
         if (Instance == null) return;
-        Instance.BumpSpring(ref Instance._gemSpring, Instance._gemText != null ? Instance._gemText.transform.parent : null);
+        Instance.BumpSpring(ref Instance._coinSpring, Instance._coinText != null ? Instance._coinText.transform.parent : null);
     }
 
     void OnDestroy()
     {
         if (_bowHealth != null) _bowHealth.OnHPChanged -= UpdateHP;
         if (_arrowManager != null) _arrowManager.OnArrowCountChanged -= UpdateArrows;
-        if (_waveManager != null) _waveManager.OnWaveStarted -= UpdateWave;
-        if (_gemManager != null) _gemManager.OnGemsChanged -= UpdateGems;
+        if (_waveManager != null) _waveManager.OnWaveStarted -= OnWaveStarted;
+        if (_waveManager != null) _waveManager.OnBossWaveStarted -= OnBossWaveStarted;
+        if (_coinManager != null) _coinManager.OnCoinsChanged -= UpdateCoins;
         if (GameManager.Instance != null)
             GameManager.Instance.OnGameStateChanged -= HandleGameStateChanged;
         if (UpgradeManager.Instance != null)
@@ -101,11 +101,9 @@ public class HUDManager : MonoBehaviour
 
     void HandleGameStateChanged(GameState state)
     {
-        // Show/hide HUD based on state
         bool showHUD = state == GameState.Playing || state == GameState.WaveComplete;
         if (_hudContent != null) _hudContent.SetActive(showHUD);
 
-        // Banner for wave complete
         if (_bannerObj != null)
         {
             if (state == GameState.WaveComplete)
@@ -114,7 +112,6 @@ public class HUDManager : MonoBehaviour
                 if (_bannerText != null) _bannerText.text = $"VAGUE {waveNum} TERMINEE !";
                 _bannerObj.SetActive(true);
 
-                // Spring pop-in on banner text (not bg)
                 if (_bannerText != null)
                 {
                     if (_bannerSpring == null)
@@ -134,11 +131,9 @@ public class HUDManager : MonoBehaviour
     {
         Transform canvas = transform;
 
-        // HUD content wrapper (to hide all HUD at once)
         Transform hudContentT = canvas.Find("HUDContent");
         if (hudContentT != null) _hudContent = hudContentT.gameObject;
 
-        // HUD elements are children of HUDContent
         Transform hud = hudContentT != null ? hudContentT : canvas;
 
         Transform hpBarBg = hud.Find("HPBarBg");
@@ -151,11 +146,12 @@ public class HUDManager : MonoBehaviour
             if (hpTextT != null) _hpText = hpTextT.GetComponent<TextMeshProUGUI>();
         }
 
-        Transform gemRow = hud.Find("GemRow");
-        if (gemRow != null)
+        // Support both old name (GemRow) and new name (CoinRow)
+        Transform coinRow = hud.Find("CoinRow") ?? hud.Find("GemRow");
+        if (coinRow != null)
         {
-            Transform gemTextT = gemRow.Find("GemText");
-            if (gemTextT != null) _gemText = gemTextT.GetComponent<TextMeshProUGUI>();
+            Transform coinTextT = coinRow.Find("CoinText") ?? coinRow.Find("GemText");
+            if (coinTextT != null) _coinText = coinTextT.GetComponent<TextMeshProUGUI>();
         }
 
         Transform waveBg = hud.Find("WaveBg");
@@ -183,7 +179,6 @@ public class HUDManager : MonoBehaviour
             if (bdmg != null) _buffDamage = bdmg.GetComponent<TextMeshProUGUI>();
         }
 
-        // Banner and PauseButton are direct children of canvas (not inside HUDContent)
         Transform bannerT = canvas.Find("WaveCompleteBanner");
         if (bannerT != null)
         {
@@ -223,18 +218,42 @@ public class HUDManager : MonoBehaviour
         BumpSpring(ref _arrowSpring, _arrowText.transform.parent);
     }
 
-    void UpdateWave(int current, int total)
+    void OnWaveStarted(int current)
     {
         if (_waveText == null) return;
-        _waveText.text = $"VAGUE {current}/{total}";
+        _waveText.text = $"VAGUE {current}";
         BumpSpring(ref _waveSpring, _waveText.transform.parent);
     }
 
-    void UpdateGems(int total)
+    void OnBossWaveStarted(BossData bossData)
     {
-        if (_gemText == null) return;
-        _gemText.text = $"{total}";
-        BumpSpring(ref _gemSpring, _gemText.transform.parent);
+        if (_bannerObj == null || _bannerText == null) return;
+
+        _bannerText.text = $"BOSS !\n{bossData.bossName}";
+        _bannerText.color = new Color(1f, 0.3f, 0.3f);
+        _bannerObj.SetActive(true);
+
+        if (_bannerSpring == null)
+            _bannerSpring = _bannerText.gameObject.AddComponent<MMSpringScale>();
+        _bannerSpring.MoveToInstant(Vector3.zero);
+        _bannerSpring.MoveTo(Vector3.one);
+
+        // Auto-hide after 2 seconds
+        StartCoroutine(HideBannerAfter(2f));
+    }
+
+    System.Collections.IEnumerator HideBannerAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (_bannerObj != null) _bannerObj.SetActive(false);
+        if (_bannerText != null) _bannerText.color = Color.white;
+    }
+
+    void UpdateCoins(int total)
+    {
+        if (_coinText == null) return;
+        _coinText.text = $"{total}";
+        BumpSpring(ref _coinSpring, _coinText.transform.parent);
     }
 
     void BumpSpring(ref MMSpringScale spring, Transform target)

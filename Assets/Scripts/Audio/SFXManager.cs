@@ -15,6 +15,7 @@ public class SFXManager : MonoBehaviour
     [Header("Music Clips")]
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private AudioClip actionMusic;
+    [SerializeField] private AudioClip bossMusic;
 
     [Header("SFX Settings")]
     [SerializeField][Range(0f, 1f)] private float sfxVolume = 0.7f;
@@ -30,6 +31,7 @@ public class SFXManager : MonoBehaviour
     private AudioSource _musicSourceB;
     private bool _usingSourceA = true;
     private Coroutine _crossfadeRoutine;
+    private bool _isBossMusic;
 
     void Awake()
     {
@@ -59,6 +61,10 @@ public class SFXManager : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
 
+        var waveManager = FindFirstObjectByType<WaveManager>();
+        if (waveManager != null)
+            waveManager.OnBossWaveStarted += HandleBossWaveStarted;
+
         // Start with menu music
         PlayMusic(menuMusic);
     }
@@ -74,16 +80,33 @@ public class SFXManager : MonoBehaviour
         switch (state)
         {
             case GameState.Menu:
+                _isBossMusic = false;
                 PlayMusic(menuMusic);
                 break;
             case GameState.Playing:
-                PlayMusic(actionMusic);
+                if (!_isBossMusic)
+                    PlayMusic(actionMusic);
+                break;
+            case GameState.WaveComplete:
+                if (_isBossMusic)
+                {
+                    _isBossMusic = false;
+                    PlayMusic(actionMusic);
+                }
                 break;
             case GameState.GameOver:
             case GameState.Victory:
+                _isBossMusic = false;
                 PlayMusic(menuMusic);
                 break;
         }
+    }
+
+    void HandleBossWaveStarted(BossData bossData)
+    {
+        _isBossMusic = true;
+        if (bossMusic != null)
+            PlayMusic(bossMusic);
     }
 
     // --- SFX ---

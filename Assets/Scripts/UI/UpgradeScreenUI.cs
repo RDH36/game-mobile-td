@@ -14,7 +14,7 @@ public class UpgradeScreenUI : MonoBehaviour
     private Button _skipButton;
 
     private UpgradeManager _upgradeManager;
-    private GemManager _gemManager;
+    private CoinManager _coinManager;
     private WaveManager _waveManager;
 
     void Awake()
@@ -26,7 +26,7 @@ public class UpgradeScreenUI : MonoBehaviour
     void Start()
     {
         _upgradeManager = FindFirstObjectByType<UpgradeManager>();
-        _gemManager = FindFirstObjectByType<GemManager>();
+        _coinManager = FindFirstObjectByType<CoinManager>();
         _waveManager = FindFirstObjectByType<WaveManager>();
 
         if (_skipButton != null)
@@ -105,11 +105,11 @@ public class UpgradeScreenUI : MonoBehaviour
         int waveNum = _waveManager != null ? _waveManager.CurrentWave : 0;
         if (_titleText != null) _titleText.text = $"VAGUE {waveNum} TERMINEE !";
 
-        int waveGems = _gemManager != null ? _gemManager.GemsThisWave : 0;
-        int totalGems = _gemManager != null ? _gemManager.GemsThisRun : 0;
-        bool perfect = _gemManager != null && _gemManager.PerfectWave;
+        int waveCoins = _coinManager != null ? _coinManager.CoinsThisWave : 0;
+        int totalCoins = _coinManager != null ? _coinManager.CoinsThisRun : 0;
+        bool perfect = _coinManager != null && _coinManager.PerfectWave;
         string perfectTxt = perfect ? "  PARFAIT!" : "";
-        if (_gemsInfoText != null) _gemsInfoText.text = $"Gemmes: +{waveGems}  (Total: {totalGems}){perfectTxt}";
+        if (_gemsInfoText != null) _gemsInfoText.text = $"Coins: +{waveCoins}  (Total: {totalCoins}){perfectTxt}";
 
         if (choices != null)
         {
@@ -121,13 +121,14 @@ public class UpgradeScreenUI : MonoBehaviour
                 {
                     _upgradeButtons[i].gameObject.SetActive(true);
                     UpgradeData data = choices[i];
-                    bool canAfford = totalGems >= data.cost;
+                    int scaledCost = _upgradeManager != null ? _upgradeManager.GetScaledCost(data) : data.cost;
+                    bool canAfford = totalCoins >= scaledCost;
 
                     if (_upgradeTitles[i] != null)
                         _upgradeTitles[i].text = $"{data.upgradeName}\n<size=18>{data.description}</size>";
                     if (_upgradeCosts[i] != null)
                     {
-                        _upgradeCosts[i].text = $"{data.cost}";
+                        _upgradeCosts[i].text = $"{scaledCost}";
                         _upgradeCosts[i].color = canAfford ? new Color(1f, 0.85f, 0.2f) : new Color(0.6f, 0.3f, 0.3f);
                     }
 

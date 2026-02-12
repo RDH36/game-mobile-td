@@ -22,7 +22,87 @@ public class EnemySpawner : MonoBehaviour
     public event System.Action<Enemy> OnEnemyKilled;
     public event System.Action OnAllEnemiesKilled;
 
-    public void SpawnWave(WaveEntry[] entries)
+    public void SpawnBoss(BossData bossData) => SpawnBossWave(bossData, null);
+
+    public void SpawnBossWave(BossData bossData, WaveEntry[] guards)
+    {
+        ClearEnemies();
+
+        Camera cam = Camera.main;
+        float topY = cam.orthographicSize - 1.5f;
+
+        // Boss at center-top
+        Vector3 bossPos = new Vector3(0f, topY * 0.5f, 0f);
+
+        GameObject go = Instantiate(enemyPrefab, bossPos, Quaternion.identity);
+        go.layer = LayerMask.NameToLayer("Enemy");
+        go.transform.localScale = Vector3.one;
+
+        // Create a temporary EnemyData from BossData for Enemy.Init compatibility
+        EnemyData tempData = ScriptableObject.CreateInstance<EnemyData>();
+        tempData.enemyName = bossData.bossName;
+        tempData.maxHP = bossData.maxHP;
+        tempData.damage = bossData.damage;
+        tempData.color = bossData.color;
+        tempData.sprite = bossData.sprite;
+        tempData.animController = bossData.animController;
+        tempData.coinDropMin = bossData.coinDropMin;
+        tempData.coinDropMax = bossData.coinDropMax;
+
+        Enemy enemy = go.GetComponent<Enemy>();
+        enemy.Init(tempData);
+
+        // Add Boss behavior component
+        Boss boss = go.AddComponent<Boss>();
+        boss.Init(bossData);
+
+        enemy.Health.OnDied += HandleEnemyDied;
+        _activeEnemies.Add(enemy);
+
+        go.name = $"Boss_{bossData.bossName}";
+
+        // Spawn guard monsters around the boss
+        if (guards != null && guards.Length > 0)
+            SpawnGuards(guards, bossPos);
+    }
+
+    void SpawnGuards(WaveEntry[] guards, Vector3 bossPos)
+    {
+        Camera cam = Camera.main;
+        Rect safe = Screen.safeArea;
+        Vector2 safeMin = cam.ScreenToWorldPoint(new Vector2(safe.xMin, safe.yMin));
+        Vector2 safeMax = cam.ScreenToWorldPoint(new Vector2(safe.xMax, safe.yMax));
+
+        // Guards spawn IN FRONT of the boss (below it) to protect it
+        float arenaMinX = safeMin.x + spawnPadding;
+        float arenaMaxX = safeMax.x - spawnPadding;
+        float guardMinY = Mathf.Max(0f, bossPos.y - 3.5f); // below boss
+        float guardMaxY = bossPos.y - 0.8f; // just in front of boss
+
+        List<Vector2> usedPositions = new List<Vector2>();
+
+        foreach (WaveEntry entry in guards)
+        {
+            for (int i = 0; i < entry.count; i++)
+            {
+                Vector2 pos = FindValidPosition(arenaMinX, arenaMaxX, guardMinY, guardMaxY, usedPositions, 0.9f);
+                usedPositions.Add(pos);
+
+                GameObject go = Instantiate(enemyPrefab, pos, Quaternion.identity);
+                go.layer = LayerMask.NameToLayer("Enemy");
+
+                Enemy guardEnemy = go.GetComponent<Enemy>();
+                guardEnemy.Init(entry.enemyData);
+
+                guardEnemy.Health.OnDied += HandleEnemyDied;
+                _activeEnemies.Add(guardEnemy);
+            }
+        }
+    }
+
+    public void SpawnWave(WaveEntry[] entries) => SpawnWave(entries, 1f, 1f);
+
+    public void SpawnWave(WaveEntry[] entries, float hpMultiplier, float coinMultiplier)
     {
         ClearEnemies();
 
@@ -62,7 +142,7 @@ public class EnemySpawner : MonoBehaviour
                 go.layer = LayerMask.NameToLayer("Enemy");
 
                 Enemy enemy = go.GetComponent<Enemy>();
-                enemy.Init(entry.enemyData);
+                enemy.Init(entry.enemyData, hpMultiplier, coinMultiplier);
 
                 enemy.Health.OnDied += HandleEnemyDied;
                 _activeEnemies.Add(enemy);
