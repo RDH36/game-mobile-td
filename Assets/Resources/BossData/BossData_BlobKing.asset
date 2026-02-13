@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossData
   bossName: Blob King
   bossWave: 10
-  maxHP: 15
+  maxHP: 60
   damage: 2
   coinDropMin: 20
   coinDropMax: 40

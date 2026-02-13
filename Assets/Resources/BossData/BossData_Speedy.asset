@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossData
   bossName: Speedy
   bossWave: 20
-  maxHP: 25
+  maxHP: 150
   damage: 3
   coinDropMin: 30
   coinDropMax: 50

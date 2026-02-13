@@ -164,15 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f91d1ad2a2d70ba4e927f73dd1b39b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GemManager
-  _gemsThisRun: 0
-  _gemsThisWave: 0
-  _killsThisArrow: 0
-  _damageTakenThisWave: 0
-  _totalKillsThisRun: 0
-  _totalArrowsFiredThisRun: 0
-  _spawner: {fileID: 0}
-  _arrowManager: {fileID: 0}
-  _bowHealth: {fileID: 0}
 --- !u!114 &98965541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,6 +558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefab: {fileID: 2288660253407523861, guid: 9e6788b4662a7ba479c9fe4746eb3821, type: 3}
+  bossPrefab: {fileID: 2288660253407523861, guid: 279862695d23aad49baa1409679117b2, type: 3}
   spawnPadding: 0.5
   minSpacingBetweenEnemies: 1.2
 --- !u!114 &350960932

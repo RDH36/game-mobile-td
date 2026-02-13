@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject bossPrefab;
     [SerializeField] private float spawnPadding = 0.5f;
     [SerializeField] private float minSpacingBetweenEnemies = 1.2f;
 
@@ -31,19 +32,21 @@ public class EnemySpawner : MonoBehaviour
         Camera cam = Camera.main;
         float topY = cam.orthographicSize - 1.5f;
 
-        // Boss at center-top
-        Vector3 bossPos = new Vector3(0f, topY * 0.5f, 0f);
+        // Boss target position (near the top)
+        Vector3 bossPos = new Vector3(0f, topY - 0.5f, 0f);
+        // Start off-screen above the top wall
+        Vector3 startPos = new Vector3(0f, cam.orthographicSize + 2f, 0f);
 
-        GameObject go = Instantiate(enemyPrefab, bossPos, Quaternion.identity);
+        GameObject bPrefab = bossPrefab != null ? bossPrefab : enemyPrefab;
+        GameObject go = Instantiate(bPrefab, startPos, Quaternion.identity);
         go.layer = LayerMask.NameToLayer("Enemy");
-        go.transform.localScale = Vector3.one;
 
         // Create a temporary EnemyData from BossData for Enemy.Init compatibility
         EnemyData tempData = ScriptableObject.CreateInstance<EnemyData>();
         tempData.enemyName = bossData.bossName;
         tempData.maxHP = bossData.maxHP;
         tempData.damage = bossData.damage;
-        tempData.color = bossData.color;
+        tempData.color = Color.white;
         tempData.sprite = bossData.sprite;
         tempData.animController = bossData.animController;
         tempData.coinDropMin = bossData.coinDropMin;
@@ -61,6 +64,9 @@ public class EnemySpawner : MonoBehaviour
 
         go.name = $"Boss_{bossData.bossName}";
 
+        // Wait a moment for UI to clear, then slide boss in
+        StartCoroutine(BossEntrance(go.transform, bossPos, 0.5f));
+
         // Spawn guard monsters around the boss
         if (guards != null && guards.Length > 0)
             SpawnGuards(guards, bossPos);
@@ -74,12 +80,14 @@ public class EnemySpawner : MonoBehaviour
         Vector2 safeMax = cam.ScreenToWorldPoint(new Vector2(safe.xMax, safe.yMax));
 
         // Guards spawn IN FRONT of the boss (below it) to protect it
+        // Keep 1.5 units clearance from boss center to avoid overlap
         float arenaMinX = safeMin.x + spawnPadding;
         float arenaMaxX = safeMax.x - spawnPadding;
-        float guardMinY = Mathf.Max(0f, bossPos.y - 3.5f); // below boss
-        float guardMaxY = bossPos.y - 0.8f; // just in front of boss
+        float guardMaxY = bossPos.y - 1.5f;
+        float guardMinY = Mathf.Max(-1f, guardMaxY - 4f);
 
-        List<Vector2> usedPositions = new List<Vector2>();
+        // Reserve boss position so guards never spawn on top of it
+        List<Vector2> usedPositions = new List<Vector2> { bossPos };
 
         foreach (WaveEntry entry in guards)
         {
@@ -98,6 +106,27 @@ public class EnemySpawner : MonoBehaviour
                 _activeEnemies.Add(guardEnemy);
             }
         }
+    }
+
+    System.Collections.IEnumerator BossEntrance(Transform bossT, Vector3 target, float delay)
+    {
+        if (delay > 0f)
+            yield return new WaitForSeconds(delay);
+
+        float duration = 1.2f;
+        float elapsed = 0f;
+        Vector3 start = bossT.position;
+
+        while (elapsed < duration && bossT != null)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
+            bossT.position = Vector3.Lerp(start, target, t);
+            yield return null;
+        }
+
+        if (bossT != null)
+            bossT.position = target;
     }
 
     public void SpawnWave(WaveEntry[] entries) => SpawnWave(entries, 1f, 1f);

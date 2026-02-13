@@ -14,6 +14,15 @@ public class Boss : MonoBehaviour
     private float _moveSpeed;
     private List<GameObject> _obstacles = new List<GameObject>();
     private SpriteRenderer _shieldVisual;
+    private Coroutine _obstacleRoutine;
+    private Sprite[] _bulletSprites;
+    private const int MaxObstacles = 3;
+    private const float ObstacleSpawnInterval = 1.5f;
+    private const float ObstacleAttackInterval = 4f;
+    private const float OrbitRadius = 1.2f;
+    private const float OrbitSpeed = 120f; // degrees per second
+    private float _orbitAngle;
+    private bool _launching;
 
     // Shield cycle: 3s shielded, 3s vulnerable
     private const float ShieldCycleDuration = 3f;
@@ -31,10 +40,13 @@ public class Boss : MonoBehaviour
 
         _health.OnHPChanged += OnBossHPChanged;
 
+        // Load bullet sprites for orbit balls
+        _bulletSprites = Resources.LoadAll<Sprite>("Sprites/Bullets");
+
         switch (data.pattern)
         {
             case BossPattern.Obstacle:
-                SpawnObstacles(3);
+                _obstacleRoutine = StartCoroutine(ObstacleSpawnLoop());
                 break;
             case BossPattern.Speed:
                 _moveSpeed = BaseMoveSpeed;
@@ -63,12 +75,19 @@ public class Boss : MonoBehaviour
         // Shield timer
         if (_shieldVisual != null)
             UpdateShieldCycle();
+
+        // Orbit cubes around boss
+        if (_obstacles.Count > 0 && !_launching)
+            UpdateOrbit();
     }
 
     void OnDestroy()
     {
         if (_health != null)
             _health.OnHPChanged -= OnBossHPChanged;
+
+        if (_obstacleRoutine != null)
+            StopCoroutine(_obstacleRoutine);
 
         // Clean up obstacles
         foreach (var obs in _obstacles)
@@ -175,55 +194,152 @@ public class Boss : MonoBehaviour
 
     // --- OBSTACLE PATTERN ---
 
-    void SpawnObstacles(int count)
+    IEnumerator ObstacleSpawnLoop()
     {
-        Camera cam = Camera.main;
-        if (cam == null) return;
-
-        float halfW = cam.orthographicSize * cam.aspect - 1f;
-        float maxY = cam.orthographicSize - 1.5f;
-
-        for (int i = 0; i < count; i++)
+        while (_health != null && !_health.IsDead)
         {
-            GameObject obs = new GameObject($"BossObstacle_{i}");
-            obs.layer = LayerMask.NameToLayer("Wall");
+            // Spawn phase: fill up to MaxObstacles
+            while (_obstacles.Count < MaxObstacles && _health != null && !_health.IsDead)
+            {
+                SpawnOrbitCube();
+                yield return new WaitForSeconds(ObstacleSpawnInterval);
+            }
 
-            float x = Random.Range(-halfW * 0.8f, halfW * 0.8f);
-            float y = Random.Range(0.5f, maxY * 0.8f);
-            obs.transform.position = new Vector3(x, y, 0);
+            // Wait before attacking
+            yield return new WaitForSeconds(ObstacleAttackInterval);
 
-            // Add box collider for arrow bouncing
-            BoxCollider2D col = obs.AddComponent<BoxCollider2D>();
-            float scaleX = Random.Range(1f, 2f);
-            float scaleY = Random.Range(0.5f, 1f);
-            obs.transform.localScale = new Vector3(scaleX, scaleY, 1f);
-
-            // Visual
-            SpriteRenderer sr = obs.AddComponent<SpriteRenderer>();
-            sr.color = new Color(0.5f, 0.5f, 0.55f, 1f);
-            sr.sortingOrder = -1;
-            sr.sprite = CreateObstacleSprite();
-
-            // Bouncy material like walls
-            var mat = new PhysicsMaterial2D("ObstacleBounce");
-            mat.bounciness = 1f;
-            mat.friction = 0f;
-            col.sharedMaterial = mat;
-
-            _obstacles.Add(obs);
+            // Attack phase: launch all cubes at the player
+            if (_health != null && !_health.IsDead)
+                yield return LaunchCubesAtPlayer();
         }
     }
 
-    Sprite CreateObstacleSprite()
+    void SpawnOrbitCube()
+    {
+        // If at max, remove oldest
+        if (_obstacles.Count >= MaxObstacles)
+        {
+            GameObject oldest = _obstacles[0];
+            _obstacles.RemoveAt(0);
+            if (oldest != null) Destroy(oldest);
+        }
+
+        GameObject cube = new GameObject("BossCube");
+        cube.layer = LayerMask.NameToLayer("Wall");
+
+        // Start at orbit position around boss
+        cube.transform.position = transform.position;
+
+        // Bullet size
+        cube.transform.localScale = Vector3.one * 0.6f;
+
+        // Circle collider for arrow bouncing
+        CircleCollider2D col = cube.AddComponent<CircleCollider2D>();
+        var mat = new PhysicsMaterial2D("BallBounce");
+        mat.bounciness = 1f;
+        mat.friction = 0f;
+        col.sharedMaterial = mat;
+
+        // Visual — random bullet sprite
+        SpriteRenderer sr = cube.AddComponent<SpriteRenderer>();
+        if (_bulletSprites != null && _bulletSprites.Length > 0)
+            sr.sprite = _bulletSprites[Random.Range(0, _bulletSprites.Length)];
+        else
+            sr.sprite = CreateBallSprite();
+        sr.sortingOrder = 5;
+
+        _obstacles.Add(cube);
+    }
+
+    void UpdateOrbit()
+    {
+        _orbitAngle += OrbitSpeed * Time.deltaTime;
+
+        for (int i = 0; i < _obstacles.Count; i++)
+        {
+            if (_obstacles[i] == null) continue;
+
+            float angle = (_orbitAngle + i * (360f / Mathf.Max(1, _obstacles.Count))) * Mathf.Deg2Rad;
+            Vector3 offset = new Vector3(Mathf.Cos(angle) * OrbitRadius, Mathf.Sin(angle) * OrbitRadius, 0f);
+            _obstacles[i].transform.position = transform.position + offset;
+
+            // Spin the cube itself
+            _obstacles[i].transform.Rotate(0, 0, 200f * Time.deltaTime);
+        }
+    }
+
+    Sprite CreateBallSprite()
     {
         int size = 32;
         Texture2D tex = new Texture2D(size, size);
-        tex.filterMode = FilterMode.Point;
+        tex.filterMode = FilterMode.Bilinear;
+        float center = size / 2f;
+        float radius = size / 2f;
+        Color clear = new Color(1, 1, 1, 0);
+
         for (int y = 0; y < size; y++)
             for (int x = 0; x < size; x++)
-                tex.SetPixel(x, y, Color.white);
+            {
+                float dist = Vector2.Distance(new Vector2(x, y), new Vector2(center, center));
+                tex.SetPixel(x, y, dist < radius ? Color.white : clear);
+            }
         tex.Apply();
         return Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 32f);
+    }
+
+    IEnumerator LaunchCubesAtPlayer()
+    {
+        _launching = true;
+
+        BowHealth bow = FindFirstObjectByType<BowHealth>();
+        if (bow == null) { _launching = false; yield break; }
+
+        Vector3 target = bow.transform.position;
+        float launchSpeed = 8f;
+
+        // Snapshot cubes to launch
+        var cubes = new List<GameObject>(_obstacles);
+        _obstacles.Clear();
+
+        foreach (var cube in cubes)
+        {
+            if (cube == null) continue;
+
+            // Disable collider so it doesn't bounce arrows during flight
+            var col = cube.GetComponent<Collider2D>();
+            if (col != null) col.enabled = false;
+
+            StartCoroutine(MoveCubeToTarget(cube, target, launchSpeed, bow));
+        }
+
+        // Wait for all cubes to arrive
+        yield return new WaitForSeconds(1.5f);
+
+        _launching = false;
+    }
+
+    IEnumerator MoveCubeToTarget(GameObject cube, Vector3 target, float speed, BowHealth bow)
+    {
+        while (cube != null && Vector3.Distance(cube.transform.position, target) > 0.3f)
+        {
+            cube.transform.position = Vector3.MoveTowards(cube.transform.position, target, speed * Time.deltaTime);
+            cube.transform.Rotate(0, 0, 400f * Time.deltaTime);
+            yield return null;
+        }
+
+        if (cube != null)
+        {
+            // Deal 1 damage to bow
+            if (bow != null && bow.CurrentHP > 0)
+            {
+                bow.TakeDamage(1);
+                DamagePopup.Create(bow.transform.position, 1);
+                if (CameraShake.Instance != null)
+                    CameraShake.Instance.Shake(0.15f, 0.15f);
+            }
+
+            Destroy(cube);
+        }
     }
 
     // --- SPLIT PATTERN ---

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossData
   bossName: Splitter
   bossWave: 40
-  maxHP: 45
-  damage: 4
+  maxHP: 400
+  damage: 5
   coinDropMin: 50
   coinDropMax: 80
   color: {r: 0.9, g: 0.3, b: 0.6, a: 1}

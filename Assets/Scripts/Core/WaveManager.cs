@@ -157,36 +157,36 @@ public class WaveManager : MonoBehaviour
         // Guard composition scales with boss difficulty
         switch (waveNum)
         {
-            case 10: // BlobKing — 3 weak guards
-                return new[] { new WaveEntry { enemyData = _weak, count = 3 } };
+            case 10: // BlobKing — 4 weak guards
+                return new[] { new WaveEntry { enemyData = _weak, count = 4 } };
 
-            case 20: // Speedy — 3 weak + 1 medium
+            case 20: // Speedy — 4 weak + 2 medium
+                return new[]
+                {
+                    new WaveEntry { enemyData = _weak, count = 4 },
+                    new WaveEntry { enemyData = _medium, count = 2 }
+                };
+
+            case 30: // Guardian — 3 weak + 4 medium
                 return new[]
                 {
                     new WaveEntry { enemyData = _weak, count = 3 },
-                    new WaveEntry { enemyData = _medium, count = 1 }
+                    new WaveEntry { enemyData = _medium, count = 4 }
                 };
 
-            case 30: // Guardian — 2 weak + 3 medium
+            case 40: // Splitter — 4 medium + 3 strong
                 return new[]
                 {
-                    new WaveEntry { enemyData = _weak, count = 2 },
-                    new WaveEntry { enemyData = _medium, count = 3 }
+                    new WaveEntry { enemyData = _medium, count = 4 },
+                    new WaveEntry { enemyData = _strong, count = 3 }
                 };
 
-            case 40: // Splitter — 3 medium + 2 strong
+            case 50: // Overlord — 3 medium + 4 strong + 2 elite
                 return new[]
                 {
                     new WaveEntry { enemyData = _medium, count = 3 },
-                    new WaveEntry { enemyData = _strong, count = 2 }
-                };
-
-            case 50: // Overlord — 2 medium + 3 strong + 1 elite
-                return new[]
-                {
-                    new WaveEntry { enemyData = _medium, count = 2 },
-                    new WaveEntry { enemyData = _strong, count = 3 },
-                    new WaveEntry { enemyData = _elite, count = 1 }
+                    new WaveEntry { enemyData = _strong, count = 4 },
+                    new WaveEntry { enemyData = _elite, count = 2 }
                 };
 
             default: // Any other boss wave — scale guards with wave number

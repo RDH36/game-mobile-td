@@ -67,11 +67,23 @@ public class ArrowCollisionHandler : MonoBehaviour
                 // Floating damage number
                 DamagePopup.Create(collision.transform.position, damagePerHit);
 
-                // Knockback if still alive
+                // Knockback if still alive — clamp to arena bounds
                 if (!killed)
                 {
                     Vector2 knockDir = ((Vector2)collision.transform.position - (Vector2)transform.position).normalized;
-                    collision.transform.position += (Vector3)(knockDir * 0.3f);
+                    float knockAmount = (boss != null) ? 0.05f : 0.3f;
+                    Vector3 newPos = collision.transform.position + (Vector3)(knockDir * knockAmount);
+
+                    Camera cam = Camera.main;
+                    if (cam != null)
+                    {
+                        float halfW = cam.orthographicSize * cam.aspect - 0.5f;
+                        float topY = cam.orthographicSize - 0.5f;
+                        newPos.x = Mathf.Clamp(newPos.x, -halfW, halfW);
+                        newPos.y = Mathf.Clamp(newPos.y, -3.5f, topY);
+                    }
+
+                    collision.transform.position = newPos;
                 }
             }
 

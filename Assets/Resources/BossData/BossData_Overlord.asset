@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossData
   bossName: Overlord
   bossWave: 50
-  maxHP: 60
-  damage: 5
+  maxHP: 700
+  damage: 7
   coinDropMin: 60
   coinDropMax: 100
   color: {r: 0.6, g: 0.4, b: 0.2, a: 1}
