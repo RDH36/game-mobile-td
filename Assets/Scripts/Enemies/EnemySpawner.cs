@@ -64,8 +64,8 @@ public class EnemySpawner : MonoBehaviour
 
         go.name = $"Boss_{bossData.bossName}";
 
-        // Wait a moment for UI to clear, then slide boss in
-        StartCoroutine(BossEntrance(go.transform, bossPos, 0.5f));
+        // Wait for boss name banner to disappear (2s), then slide boss in
+        StartCoroutine(BossEntrance(go.transform, bossPos, 2.2f));
 
         // Spawn guard monsters around the boss
         if (guards != null && guards.Length > 0)
@@ -129,9 +129,9 @@ public class EnemySpawner : MonoBehaviour
             bossT.position = target;
     }
 
-    public void SpawnWave(WaveEntry[] entries) => SpawnWave(entries, 1f, 1f);
+    public void SpawnWave(WaveEntry[] entries) => SpawnWave(entries, 1f, 1f, 0);
 
-    public void SpawnWave(WaveEntry[] entries, float hpMultiplier, float coinMultiplier)
+    public void SpawnWave(WaveEntry[] entries, float hpMultiplier, float coinMultiplier, int waveNum = 0)
     {
         ClearEnemies();
 
@@ -172,6 +172,11 @@ public class EnemySpawner : MonoBehaviour
 
                 Enemy enemy = go.GetComponent<Enemy>();
                 enemy.Init(entry.enemyData, hpMultiplier, coinMultiplier);
+
+                // After wave 10, some enemies get an orbiting ball
+                float orbitChance = InfiniteWaveGenerator.GetOrbitBallChance(waveNum);
+                if (orbitChance > 0f && Random.value < orbitChance)
+                    go.AddComponent<EnemyOrbitBall>();
 
                 enemy.Health.OnDied += HandleEnemyDied;
                 _activeEnemies.Add(enemy);

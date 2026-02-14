@@ -8,6 +8,7 @@ public class ArrowCollisionHandler : MonoBehaviour
     private ArrowDurability _durability;
 
     public int DamagePerHit => damagePerHit;
+    public static event System.Action OnWallBounce;
 
     void Awake()
     {
@@ -29,6 +30,7 @@ public class ArrowCollisionHandler : MonoBehaviour
             ContactPoint2D contact = collision.GetContact(0);
             SpawnWallHitParticles(contact.point, contact.normal);
             SFXManager.Instance?.PlayHitWall();
+            OnWallBounce?.Invoke();
 
             // Slight random angle perturbation to prevent infinite bounce loops
             var rb = GetComponent<Rigidbody2D>();

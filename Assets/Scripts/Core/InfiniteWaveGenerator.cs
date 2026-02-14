@@ -20,6 +20,16 @@ public static class InfiniteWaveGenerator
     }
 
     /// <summary>
+    /// Chance (0-1) for a normal enemy to get an orbiting ball after wave 10.
+    /// W11=8%, W15=40%, W20=80%, W23+=100%
+    /// </summary>
+    public static float GetOrbitBallChance(int wave)
+    {
+        if (wave <= 10) return 0f;
+        return Mathf.Clamp01((wave - 10) * 0.08f);
+    }
+
+    /// <summary>
     /// Generate wave composition based on wave number.
     /// Wave 1-14: Weak + Medium
     /// Wave 15-24: + Strong

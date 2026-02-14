@@ -126,12 +126,14 @@
 - [ ] Les mecaniques se cumulent dans les vagues normales apres deblocage
 - [ ] Pourcentage progressif d'ennemis avec mecanique (voir tableau GDD 6.3)
 
-### 3.2 Obstacles (Vague 10+)
-- [ ] Creer `ObstacleManager.cs` : spawn 2-4 obstacles par vague
-- [ ] Creer prefab Obstacle (bloc statique, BoxCollider2D, rebond comme mur)
-- [ ] Positions aleatoires dans la zone de jeu (eviter chevauchement monstres)
-- [ ] Taille variable : 1x1 a 2x1 blocs
-- [ ] Sprite distinct (blocs gris/brique)
+### 3.2 Obstacles — Boules orbitales (Vague 10+) ✅
+> Adapte du pattern boss BlobKing : boule orbitale sur ennemis normaux (one-shot)
+- [x] Creer `EnemyOrbitBall.cs` : boule qui orbite autour d'un ennemi normal
+- [x] Auto-lancement apres 2-5s (aleatoire) vers le bow, inflige 1 degat
+- [x] Sprite bullet aleatoire (Resources/Sprites/Bullets), CircleCollider2D layer Wall
+- [x] Probabilite progressive : `GetOrbitBallChance(wave)` dans `InfiniteWaveGenerator.cs`
+  - W11=8%, W15=40%, W20=80%, W23+=100%
+- [x] Integration dans `EnemySpawner.SpawnWave()` : ajout composant selon probabilite
 
 ### 3.3 Deplacement (Vague 20+)
 - [ ] Creer `MovementBehavior.cs` : comportement de deplacement horizontal
@@ -200,37 +202,39 @@
 
 ---
 
-## 5. TUTORIEL (P0)
+## 5. TUTORIEL (P0) ✅
 
-> Actuellement : Aucun tutoriel
-> Cible : 7 etapes interactives, < 60 secondes
+> ~~Actuellement : Aucun tutoriel~~
+> Fait : 7 etapes interactives, pause a chaque etape, UI Canvas programmatique
 
 ### 5.1 Systeme de tutoriel
-- [ ] Creer `TutorialManager.cs` (singleton) : gerer les 7 etapes
-- [ ] UI overlay semi-transparent avec texte + zone highlight
-- [ ] Premiere fois seulement (`PlayerPrefs.SetInt("TutorialDone", 1)`)
-- [ ] Non-skippable (premiere fois)
+- [x] Creer `TutorialManager.cs` (singleton) : gere les 7 etapes avec enum TutorialStep
+- [x] UI overlay semi-transparent (65% noir) avec panel message, texte bold + outline
+- [x] Premiere fois seulement via `SaveManager.TutorialDone` (PlayerPrefs)
+- [x] Non-skippable (premiere fois), lance au `GameManager.StartGame()`
+- [x] Canvas sortOrder 50 (au-dessus de tout), CanvasScaler 1080x1920
 
 ### 5.2 Les 7 etapes
-- [ ] Etape 1 — Viser : "Touche et glisse pour viser" + main animee
-- [ ] Etape 2 — Trajectoire : "La ligne montre ou ira ton boulet" (2s auto)
-- [ ] Etape 3 — Tirer : "Relache pour tirer !" (validation: balle tiree)
-- [ ] Etape 4 — Rebonds : "Le boulet rebondit sur les murs !" (validation: rebond)
-- [ ] Etape 5 — Objectif : explication UI (HP, gems, balles) + bouton "COMPRIS"
-- [ ] Etape 6 — Contre-attaque : "Les monstres survivants t'attaquent !" (trigger: 1er degat)
-- [ ] Etape 7 — Upgrades : "Choisis un upgrade !" (trigger: fin vague 1)
+- [x] Etape 1 — Viser : "Glisse pour viser !" — pause + tap to continue
+- [x] Etape 2 — Trajectoire : "La ligne montre la trajectoire" — auto 2s (WaitForSecondsRealtime)
+- [x] Etape 3 — Tirer : "Relache pour tirer !" — tap to continue, puis unpause
+- [x] Etape 4 — Rebonds : cache, attend ArrowCollisionHandler.OnWallBounce → pause + affiche 2s
+- [x] Etape 5 — Contre-attaque : cache, attend BowHealth.OnDamageTaken → pause + affiche 2.5s
+- [x] Etape 6 — Explication UI : pause + bouton "COMPRIS" (vert style)
+- [x] Etape 7 — Upgrades : cache, attend UpgradeManager.OnUpgradesOffered → affiche 3s (pas de pause)
 
 ### 5.3 Integration gameplay
-- [ ] Hook dans `BowController.cs` : OnAimStarted, OnTrajectoryVisible
-- [ ] Hook dans `ArrowController.cs` : OnBulletFired
-- [ ] Hook dans `ArrowCollisionHandler.cs` : OnBulletBounced
-- [ ] Hook dans `BowHealth.cs` : OnFirstDamageTaken
-- [ ] Hook dans `UpgradeManager.cs` : OnUpgradeScreenShown, OnUpgradeSelected
+- [x] Event `OnAimStarted` dans `BowController.cs` (+ tracking `_aimFired`)
+- [x] Event static `OnWallBounce` dans `ArrowCollisionHandler.cs`
+- [x] Event `OnDamageTaken` dans `BowHealth.cs` (existait deja)
+- [x] Event `OnUpgradesOffered` dans `UpgradeManager.cs` (existait deja)
+- [x] Lancement tutorial dans `GameManager.StartGame()` (AddComponent si TutorialDone=false)
 
 ### 5.4 Localisation FR/EN
-- [ ] Textes FR pour les 7 etapes (voir GDD 2.3)
-- [ ] Textes EN pour les 7 etapes
-- [ ] Selection langue basee sur `PlayerPrefs.GetString("Language", "FR")`
+- [x] Textes FR pour les 7 etapes (GetText helper)
+- [x] Textes EN pour les 7 etapes
+- [x] Selection langue basee sur `SaveManager.Language` ("FR"/"EN")
+- [x] Rich text pour etape UI (couleurs HP rouge, Coins or, Fleches bleu)
 
 ---
 
@@ -620,7 +624,7 @@
 | 2. Boss System (5 boss, sprites Bos01-05) | 23 | P0 | Haute |
 | 3. Mecaniques Gameplay | 17 | P0 | Haute |
 | 4. Upgrades Complets (11 upgrades) | 14 | P1 | Moyenne |
-| 5. Tutoriel | 16 | P0 | Moyenne |
+| 5. Tutoriel ✅ | 16 | P0 | Moyenne |
 | 6. Economie Coins + Gems (inversee) | 12 | P0 | Moyenne |
 | 7. Sauvegarde | 8 | P0 | Faible |
 | 8. Skins (7 skins, prix en 💎) | 18 | P2 | Moyenne |

@@ -18,6 +18,7 @@ public class BowController : MonoBehaviour
     public bool IsAiming => _swipe != null && _swipe.IsSwiping && _swipe.SwipePower > 0f;
 
     public event System.Action<Vector2, float> OnShoot; // direction, speed
+    public event System.Action OnAimStarted;
 
     void Awake()
     {
@@ -48,9 +49,13 @@ public class BowController : MonoBehaviour
         }
     }
 
+    private bool _aimFired;
+
     private void HandleSwipeUpdated()
     {
         if (_swipe.SwipePower <= 0f) return;
+
+        if (!_aimFired) { _aimFired = true; OnAimStarted?.Invoke(); }
 
         // Rotate bow to face the swipe direction
         float angle = Mathf.Atan2(_swipe.SwipeDirection.y, _swipe.SwipeDirection.x) * Mathf.Rad2Deg;
@@ -68,6 +73,7 @@ public class BowController : MonoBehaviour
 
     private void HandleSwipeReleased(Vector2 direction, float power)
     {
+        _aimFired = false;
         // Feel: spring back to base scale + recoil kick
         _spring.MoveTo(_baseScale);
         float kick = squashIntensity * power;

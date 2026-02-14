@@ -105,9 +105,6 @@ public class EnemyCounterAttack : MonoBehaviour
             yield return new WaitForSeconds(delayBetweenHits);
         }
 
-        if (totalDamage > 0)
-            Debug.Log($"Counter-attack: {enemies.Count} enemies dealt {totalDamage} total damage");
-
         _counterAttacking = false;
 
         // If bow survived, allow next shot
@@ -119,7 +116,6 @@ public class EnemyCounterAttack : MonoBehaviour
             if (_arrowManager.ArrowsRemaining <= 0 && _spawner.AliveCount > 0)
             {
                 GameManager.Instance?.SetState(GameState.GameOver);
-                Debug.Log("Game Over: No arrows left and enemies still alive!");
             }
         }
     }
@@ -128,6 +124,5 @@ public class EnemyCounterAttack : MonoBehaviour
     {
         // WaveManager listens to this state change and handles next wave / victory
         GameManager.Instance?.SetState(GameState.WaveComplete);
-        Debug.Log("Wave Complete! All enemies eliminated.");
     }
 }

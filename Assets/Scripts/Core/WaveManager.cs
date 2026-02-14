@@ -98,9 +98,6 @@ public class WaveManager : MonoBehaviour
             _spawner.SpawnBossWave(bossData, guards);
             OnBossWaveStarted?.Invoke(bossData);
             OnWaveStarted?.Invoke(CurrentWave);
-            int guardCount = 0;
-            if (guards != null) foreach (var g in guards) guardCount += g.count;
-            Debug.Log($"Wave {CurrentWave} started (BOSS): {bossData.bossName} — {bossData.maxHP} HP, pattern: {bossData.pattern}, guards: {guardCount}");
             return;
         }
 
@@ -111,7 +108,6 @@ public class WaveManager : MonoBehaviour
             GameManager.Instance?.SetState(GameState.Playing);
             _spawner.SpawnWave(data.entries);
             OnWaveStarted?.Invoke(CurrentWave);
-            Debug.Log($"Wave {CurrentWave} started (fixed): {data.waveName} ({data.TotalEnemies} enemies)");
         }
         else
         {
@@ -121,12 +117,9 @@ public class WaveManager : MonoBehaviour
             WaveEntry[] entries = InfiniteWaveGenerator.Generate(waveNum, _weak, _medium, _strong, _elite);
 
             GameManager.Instance?.SetState(GameState.Playing);
-            _spawner.SpawnWave(entries, hpMult, coinMult);
+            _spawner.SpawnWave(entries, hpMult, coinMult, waveNum);
             OnWaveStarted?.Invoke(CurrentWave);
 
-            int total = 0;
-            foreach (var e in entries) total += e.count;
-            Debug.Log($"Wave {CurrentWave} started (generated): {total} enemies, HP x{hpMult:F2}, Coins x{coinMult:F2}");
         }
     }
 
@@ -216,7 +209,6 @@ public class WaveManager : MonoBehaviour
             if (boss.bossWave > 0)
             {
                 _bossByWave[boss.bossWave] = boss;
-                Debug.Log($"WaveManager: Loaded boss '{boss.bossName}' for wave {boss.bossWave}");
             }
         }
     }

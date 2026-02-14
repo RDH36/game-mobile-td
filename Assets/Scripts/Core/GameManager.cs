@@ -50,6 +50,13 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        // Launch tutorial BEFORE state change so it can receive the Playing event
+        if (SaveManager.Instance != null && !SaveManager.Instance.TutorialDone)
+        {
+            if (TutorialManager.Instance == null)
+                gameObject.AddComponent<TutorialManager>();
+        }
+
         SetState(GameState.Playing);
     }
 }

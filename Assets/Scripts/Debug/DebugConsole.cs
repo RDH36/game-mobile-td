@@ -151,7 +151,7 @@ public class DebugConsole : MonoBehaviour
         _outputText.fontSize = 28;
         _outputText.color = new Color(0.8f, 1f, 0.8f);
         _outputText.richText = true;
-        _outputText.enableWordWrapping = true;
+        _outputText.textWrappingMode = TMPro.TextWrappingModes.Normal;
         RectTransform textRT = textObj.GetComponent<RectTransform>();
         textRT.anchorMin = Vector2.zero;
         textRT.anchorMax = new Vector2(1, 1);
@@ -185,7 +185,7 @@ public class DebugConsole : MonoBehaviour
         TextMeshProUGUI inputTMP = inputTextObj.AddComponent<TextMeshProUGUI>();
         inputTMP.fontSize = 30;
         inputTMP.color = Color.white;
-        inputTMP.enableWordWrapping = false;
+        inputTMP.textWrappingMode = TMPro.TextWrappingModes.NoWrap;
         RectTransform itRT = inputTextObj.GetComponent<RectTransform>();
         itRT.anchorMin = Vector2.zero;
         itRT.anchorMax = Vector2.one;
@@ -199,7 +199,7 @@ public class DebugConsole : MonoBehaviour
         placeholder.fontSize = 30;
         placeholder.color = new Color(1, 1, 1, 0.3f);
         placeholder.fontStyle = FontStyles.Italic;
-        placeholder.enableWordWrapping = false;
+        placeholder.textWrappingMode = TMPro.TextWrappingModes.NoWrap;
         RectTransform phRT = placeholderObj.GetComponent<RectTransform>();
         phRT.anchorMin = Vector2.zero;
         phRT.anchorMax = Vector2.one;
@@ -254,6 +254,7 @@ public class DebugConsole : MonoBehaviour
                 Log("  <color=white>heal</color>      — heal bow");
                 Log("  <color=white>arrows</color>    — refill arrows");
                 Log("  <color=white>reset</color>     — reset upgrades");
+                Log("  <color=white>resettuto</color> — reset tutorial");
                 Log("  <color=white>clear</color>     — clear console");
                 break;
 
@@ -308,6 +309,16 @@ public class DebugConsole : MonoBehaviour
 
             case "reset":
                 if (_arrowManager != null) { _arrowManager.ResetUpgrades(); _arrowManager.ResetArrows(); Log("<color=green>Upgrades reset</color>"); }
+                break;
+
+            case "resettuto":
+                if (SaveManager.Instance != null)
+                {
+                    PlayerPrefs.DeleteKey("TutorialDone");
+                    PlayerPrefs.Save();
+                    SaveManager.Instance.ResetAll();
+                    Log("<color=green>Tutorial reset! Restart the game to replay tutorial.</color>");
+                }
                 break;
 
             case "clear":
